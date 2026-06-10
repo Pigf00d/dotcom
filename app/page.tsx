@@ -82,6 +82,31 @@ export default function Home() {
               <span className={styles.tag}>AWS</span>
             </div>
           </a>
+          <a
+            href="https://burntbase.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
+            <img
+              src="/burntbase-logo.png"
+              alt="Burntbase logo"
+              className={styles.projectImage}
+            />
+            <h3 className={styles.projectName}>Burntbase</h3>
+            <p className={styles.projectDesc}>
+              A web and mobile app for Clash of Clans players. Upload a
+              screenshot of an enemy base and an AI vision model identifies
+              the layout and defenses, then surfaces YouTube videos of
+              three-star attack strategies for that specific base.
+            </p>
+            <div className={styles.projectTags}>
+              <span className={styles.tag}>Next.js</span>
+              <span className={styles.tag}>TypeScript</span>
+              <span className={styles.tag}>Computer Vision</span>
+              <span className={styles.tag}>AWS S3</span>
+            </div>
+          </a>
         </div>
       </section>
 
