@@ -181,13 +181,12 @@
 .projectImage {
   width: calc(100% + 4rem);
   margin: -2rem -2rem 1.5rem;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;
   object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   background: var(--forest-muted);
 }
-
 .projectCard:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 40px rgba(45, 90, 61, 0.1);
@@ -221,43 +220,6 @@
   border-radius: 100px;
   background: var(--forest-muted);
   color: var(--forest);
-}
-
-/* ── Blog ── */
-.blogList {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  border: 1px solid var(--forest-border);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.blogItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 2rem;
-  background: var(--offwhite-light);
-  transition: background 0.3s ease, padding-left 0.3s ease;
-}
-
-.blogItem:hover {
-  background: var(--forest-muted);
-  padding-left: 2.5rem;
-}
-
-.blogTitle {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.blogDate {
-  font-size: 0.825rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  margin-left: 2rem;
 }
 
 /* ── Connect / Links ── */
@@ -339,16 +301,6 @@
 
   .section {
     padding: 4rem 1.25rem;
-  }
-
-  .blogItem {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-  }
-
-  .blogDate {
-    margin-left: 0;
   }
 
   .connectGrid {

@@ -12,11 +12,6 @@ export default function Home() {
               Projects
             </a>
           </li>
-          <li>
-            <a href="#blog" className={styles.navLink}>
-              Blog
-            </a>
-          </li>
         </ul>
       </nav>
 
@@ -65,32 +60,14 @@ export default function Home() {
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.projectGrid}>
           <a
-            href="https://github.com/Pigf00d/howIndieAmI"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.projectCard}
-          >
-            <h3 className={styles.projectName}>Underground</h3>
-            <p className={styles.projectDesc}>
-              A web app that connects to the Spotify API, analyzes your
-              listening data, and grades how niche your music taste is with a
-              shareable infographic.
-            </p>
-            <div className={styles.projectTags}>
-              <span className={styles.tag}>TypeScript</span>
-              <span className={styles.tag}>Spotify API</span>
-              <span className={styles.tag}>AWS</span>
-            </div>
-          </a>
-          <a
             href="https://burntbase.com"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.projectCard}
           >
             <img
-              src="/burntbase-logo.png"
-              alt="Burntbase logo"
+              src="/burntbase.png"
+              alt="Burntbase — Instantly scan bases for 3-star attacks"
               className={styles.projectImage}
             />
             <h3 className={styles.projectName}>Burntbase</h3>
@@ -107,20 +84,33 @@ export default function Home() {
               <span className={styles.tag}>AWS S3</span>
             </div>
           </a>
-        </div>
-      </section>
-
-      {/* ── Blog ── */}
-      <section id="blog" className={styles.section}>
-        <p className={styles.sectionLabel}>Writing</p>
-        <h2 className={styles.sectionTitle}>Blog</h2>
-        <div className={styles.blogList}>
-          <a href="#" className={styles.blogItem}>
-            <span className={styles.blogTitle}>Coming Soon</span>
-            <span className={styles.blogDate}>Stay tuned</span>
+          <a
+            href="https://crossword-phi-ashy.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
+            <img
+              src="/crossword.png"
+              alt="Crossword — The Mini daily crossword"
+              className={styles.projectImage}
+            />
+            <h3 className={styles.projectName}>Crossword</h3>
+            <p className={styles.projectDesc}>
+              A SvelteKit mini crossword with an interactive grid, clue
+              navigation, error checking, and a confetti finish. Puzzle data
+              is defined in code so new grids are easy to ship.
+            </p>
+            <div className={styles.projectTags}>
+              <span className={styles.tag}>SvelteKit</span>
+              <span className={styles.tag}>TypeScript</span>
+              <span className={styles.tag}>Svelte 5</span>
+            </div>
           </a>
         </div>
       </section>
+
+      {/* TODO: Add more sections here (e.g. blog, about, resume) */}
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>
