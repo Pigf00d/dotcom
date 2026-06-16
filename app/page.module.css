@@ -1,41 +1,91 @@
 /* ── Hero Section ── */
 .hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 8rem 2rem 4rem;
+  min-height: 72vh;
+  min-height: 72dvh;
+  padding: 7rem 2rem 4rem;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 900px;
+}
+
+.headline {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.25rem, 6vw, 4.25rem);
+  font-weight: 300;
+  color: var(--ink-primary);
+  letter-spacing: 0.08em;
+  line-height: 1.15;
+  opacity: 0;
+  animation: fadeUp 1.2s ease forwards;
 }
 
 .name {
-  font-size: clamp(3rem, 8vw, 6rem);
-  font-weight: 900;
-  color: var(--forest);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  text-align: center;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.95rem, 2vw, 1.05rem);
+  font-weight: 300;
+  color: var(--ink-primary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 1.75rem;
   opacity: 0;
-  animation: fadeUp 0.8s ease forwards;
+  animation: fadeUp 1.2s ease 0.25s forwards;
 }
 
 .tagline {
-  font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: var(--text-secondary);
-  margin-top: 1rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
+  font-family: var(--font-body), sans-serif;
+  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  font-weight: 200;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  margin-top: 0.5rem;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.2s forwards;
+  animation: fadeUp 1.2s ease 0.4s forwards;
 }
 
 .heroLinks {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
   justify-content: center;
   margin-top: 2rem;
   opacity: 0;
-  animation: fadeUp 0.8s ease 0.4s forwards;
+  animation: fadeUp 1.2s ease 0.55s forwards;
+}
+
+.socialLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--ink-muted);
+  transition: color 0.3s ease;
+}
+
+.socialLink:hover {
+  color: var(--ink-primary);
+}
+
+.socialIcon {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+}
+
+.socialLabel {
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
 }
 
 /* ── Navigation ── */
@@ -45,86 +95,97 @@
   left: 0;
   right: 0;
   z-index: 100;
-  padding: 1.25rem 2rem;
+  height: 48px;
+  padding: 0 2rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  background: rgba(245, 242, 235, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--forest-border);
+  background: rgba(242, 239, 232, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
   opacity: 0;
-  animation: fadeDown 0.6s ease 0.4s forwards;
-}
-
-.navLogo {
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: var(--forest);
-  letter-spacing: -0.02em;
+  animation: fadeDown 0.8s ease 0.3s forwards;
 }
 
 .navLinks {
   display: flex;
   gap: 2rem;
   list-style: none;
-  margin-left: auto;
 }
 
 .navLink {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: var(--ink-muted);
   transition: color 0.3s ease;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .navLink:hover {
-  color: var(--forest);
+  color: var(--ink-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* ── Tech Carousel ── */
 .carousel {
   width: 100%;
   overflow: hidden;
-  padding: 3rem 0;
-  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  padding: 2.5rem 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
 }
 
 .carouselTrack {
   display: flex;
   gap: 3rem;
   width: max-content;
-  animation: scroll 40s linear infinite;
+  animation: scroll 50s linear infinite;
 }
 
 .carouselItem {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   flex-shrink: 0;
 }
 
 .carouselIcon {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
-  opacity: 0.7;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0.4;
+  filter: saturate(0.7);
+  transition: opacity 0.3s ease;
 }
 
 .carouselItem:hover .carouselIcon {
-  opacity: 1;
-  transform: scale(1.15);
+  opacity: 0.7;
 }
 
 .carouselLabel {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--text-muted);
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.625rem;
+  font-weight: 200;
+  color: var(--ink-faint);
   white-space: nowrap;
+  letter-spacing: 0.04em;
 }
 
 @keyframes scroll {
@@ -140,23 +201,25 @@
 .section {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 6rem 2rem;
+  padding: 5rem 2rem 6rem;
 }
 
 .sectionLabel {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--forest);
-  margin-bottom: 1rem;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
 }
 
 .sectionTitle {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 800;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 300;
+  color: var(--ink-primary);
+  letter-spacing: 0.04em;
   margin-bottom: 3rem;
 }
 
@@ -168,11 +231,11 @@
 }
 
 .projectCard {
-  background: var(--offwhite-light);
-  border: 1px solid var(--forest-border);
-  border-radius: 12px;
+  background: var(--stone-bg-light);
+  border: 1px solid var(--border-medium);
+  border-radius: 4px;
   padding: 2rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -183,27 +246,31 @@
   margin: -2rem -2rem 1.5rem;
   aspect-ratio: 2 / 1;
   object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  background: var(--forest-muted);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  background: var(--stone-bg-deep);
 }
+
 .projectCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(45, 90, 61, 0.1);
-  border-color: var(--forest-light);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(13, 13, 13, 0.06);
 }
 
 .projectName {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--text-primary);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: var(--ink-primary);
+  letter-spacing: 0.03em;
   margin-bottom: 0.5rem;
 }
 
 .projectDesc {
-  font-size: 0.925rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--ink-muted);
+  line-height: 1.65;
   margin-bottom: 1.25rem;
 }
 
@@ -211,66 +278,38 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .tag {
-  font-size: 0.75rem;
-  font-weight: 500;
-  padding: 0.3rem 0.75rem;
+  font-family: var(--font-body), sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 200;
+  padding: 0.25rem 0.65rem;
   border-radius: 100px;
-  background: var(--forest-muted);
-  color: var(--forest);
-}
-
-/* ── Connect / Links ── */
-.connectGrid {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.connectLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.75rem;
-  border: 1px solid var(--forest-border);
-  border-radius: 100px;
-  font-size: 0.925rem;
-  font-weight: 500;
-  color: var(--text-primary);
-  background: var(--offwhite-light);
-  transition: all 0.3s ease;
-}
-
-.connectLink:hover {
-  background: var(--forest);
-  color: var(--offwhite);
-  border-color: var(--forest);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(45, 90, 61, 0.2);
-}
-
-.connectIcon {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
+  background: var(--surface-muted);
+  color: var(--ink-secondary);
+  border: 1px solid var(--border-medium);
+  letter-spacing: 0.03em;
 }
 
 /* ── Footer ── */
 .footer {
+  font-family: var(--font-body), sans-serif;
   text-align: center;
-  padding: 3rem 2rem;
-  color: var(--text-muted);
-  font-size: 0.825rem;
-  border-top: 1px solid var(--forest-border);
+  padding: 4rem 2rem;
+  color: var(--ink-faint);
+  font-size: 0.75rem;
+  font-weight: 200;
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--border-subtle);
 }
 
 /* ── Animations ── */
 @keyframes fadeUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -281,7 +320,7 @@
 @keyframes fadeDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
@@ -291,8 +330,17 @@
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
+  .hero {
+    min-height: 65dvh;
+    padding: 6rem 1.25rem 3rem;
+  }
+
+  .headline {
+    letter-spacing: 0.05em;
+  }
+
   .nav {
-    padding: 1rem 1.25rem;
+    padding: 0 1.25rem;
   }
 
   .navLinks {
@@ -300,14 +348,52 @@
   }
 
   .section {
-    padding: 4rem 1.25rem;
+    padding: 3.5rem 1.25rem 4rem;
   }
 
-  .connectGrid {
-    flex-direction: column;
+  .carouselIcon {
+    width: 28px;
+    height: 28px;
   }
 
-  .connectLink {
-    justify-content: center;
+  .carouselTrack {
+    animation-duration: 60s;
+  }
+
+  .socialLabel {
+    display: inline;
+  }
+}
+
+@media (min-width: 769px) {
+  .socialLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .socialLink {
+    position: relative;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headline,
+  .name,
+  .tagline,
+  .heroLinks,
+  .nav {
+    animation: none;
+    opacity: 1;
+  }
+
+  .carouselTrack {
+    animation: none;
   }
 }
