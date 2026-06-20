@@ -1,4 +1,5 @@
 import styles from "./page.module.css";
+import RotatingWord from "./RotatingWord";
 import TechCarousel from "./TechCarousel";
 
 export default function Home() {
@@ -18,7 +19,9 @@ export default function Home() {
       {/* ── Hero ── */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <h1 className={styles.headline}>Software can be beautiful.</h1>
+          <h1 className={styles.headline}>
+            Software can be <RotatingWord />
+          </h1>
           <p className={styles.name}>Henry Burke</p>
           <p className={styles.tagline}>Software Engineer</p>
           <div className={styles.heroLinks}>

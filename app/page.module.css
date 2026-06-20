@@ -31,6 +31,28 @@
   animation: fadeUp 1.2s ease forwards;
 }
 
+.rotatingWord {
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  height: 1.15em;
+  min-width: 11ch;
+  text-align: left;
+}
+
+.rotatingWordTrack {
+  display: flex;
+  flex-direction: column;
+  transform: translateY(calc(var(--word-index, 0) * -1.15em));
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rotatingWordItem {
+  flex-shrink: 0;
+  height: 1.15em;
+  line-height: 1.15;
+}
+
 .name {
   font-family: var(--font-body), sans-serif;
   font-size: clamp(0.95rem, 2vw, 1.05rem);
@@ -395,5 +417,9 @@
 
   .carouselTrack {
     animation: none;
+  }
+
+  .rotatingWordTrack {
+    transition: none;
   }
 }
