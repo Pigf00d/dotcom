@@ -5,6 +5,7 @@ import styles from './page.module.css';
 const techs = [
   { name: 'React', icon: 'react/react-original.svg' },
   { name: 'Next.js', icon: 'nextjs/nextjs-original.svg' },
+  { name: 'Svelte', icon: 'svelte/svelte-original.svg' },
   { name: 'Java', icon: 'java/java-original.svg' },
   { name: 'Python', icon: 'python/python-original.svg' },
   { name: 'JavaScript', icon: 'javascript/javascript-original.svg' },
