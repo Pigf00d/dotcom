@@ -1,6 +1,8 @@
+import Link from "next/link";
 import styles from "./page.module.css";
 import RotatingWord from "./RotatingWord";
-import TechCarousel from "./TechCarousel";
+// import TechCarousel from "./TechCarousel";
+// import MiniCrossword from "./MiniCrossword";
 
 export default function Home() {
   return (
@@ -13,6 +15,23 @@ export default function Home() {
               Projects
             </a>
           </li>
+          <li>
+            <a href="#research" className={styles.navLink}>
+              Research
+            </a>
+          </li>
+          {/* TODO later: Mini, About
+          <li>
+            <a href="#mini" className={styles.navLink}>
+              Mini
+            </a>
+          </li>
+          <li>
+            <a href="#about" className={styles.navLink}>
+              About
+            </a>
+          </li>
+          */}
         </ul>
       </nav>
 
@@ -72,19 +91,14 @@ export default function Home() {
       </section>
 
       {/* ── Tech Carousel ── */}
-      <TechCarousel />
+      {/* <TechCarousel /> */}
 
       {/* ── Projects ── */}
       <section id="projects" className={styles.section}>
         <p className={styles.sectionLabel}>Work</p>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.projectGrid}>
-          <a
-            href="https://burntbase.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.projectCard}
-          >
+          <Link href="/projects/burntbase" className={styles.projectCard}>
             <img
               src="/burntbase.png"
               alt="Burntbase — Instantly scan bases for 3-star attacks"
@@ -103,13 +117,8 @@ export default function Home() {
               <span className={styles.tag}>Computer Vision</span>
               <span className={styles.tag}>AWS S3</span>
             </div>
-          </a>
-          <a
-            href="https://crossword-phi-ashy.vercel.app/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.projectCard}
-          >
+          </Link>
+          <Link href="/projects/crossword" className={styles.projectCard}>
             <img
               src="/crossword.png"
               alt="Crossword — The Mini daily crossword"
@@ -126,9 +135,105 @@ export default function Home() {
               <span className={styles.tag}>TypeScript</span>
               <span className={styles.tag}>Svelte 5</span>
             </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* ── Research ── */}
+      <section id="research" className={styles.section}>
+        <p className={styles.sectionLabel}>Writing</p>
+        <h2 className={styles.sectionTitle}>Research</h2>
+        <div className={styles.paperList}>
+          <a
+            href="https://arxiv.org/abs/2308.12415"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.paperCard}
+          >
+            <p className={styles.paperVenue}>ICSME 2023</p>
+            <h3 className={styles.paperTitle}>
+              Benchmarking Causal Study to Interpret Large Language Models
+              for Source Code
+            </h3>
+            <p className={styles.paperAuthors}>
+              Daniel Rodriguez-Cardenas, David N. Palacio, Dipin Khati,{" "}
+              <span className={styles.paperAuthorMe}>Henry Burke</span>,
+              Denys Poshyvanyk
+            </p>
+            <p className={styles.paperDesc}>
+              Introduces Galeras, a causal benchmarking strategy for
+              interpreting LLM performance on code completion, summarization,
+              and commit generation — controlling for confounders that
+              accuracy metrics miss.
+            </p>
+            <div className={styles.projectTags}>
+              <span className={styles.tag}>arXiv</span>
+              <span className={styles.tag}>LLMs</span>
+              <span className={styles.tag}>Causal Inference</span>
+            </div>
           </a>
         </div>
       </section>
+
+      {/* TODO later: Mini crossword + About
+      <section id="mini" className={styles.section}>
+        <p className={styles.sectionLabel}>Interlude</p>
+        <h2 className={styles.sectionTitle}>The Mini</h2>
+        <p className={styles.miniIntro}>
+          A five-by-five you can solve right here — built in React for this
+          page. The full daily version is the{" "}
+          <Link href="/projects/crossword" className={styles.inlineLink}>
+            Crossword project
+          </Link>
+          .
+        </p>
+        <MiniCrossword />
+      </section>
+
+      <section id="about" className={styles.section}>
+        <p className={styles.sectionLabel}>About</p>
+        <h2 className={styles.sectionTitle}>Hello</h2>
+        <div className={styles.aboutBody}>
+          <p>
+            I’m Henry, a software engineer who likes building small, finished
+            things — tools for games I actually play, puzzles I wished
+            existed, and, along the way, a research paper on how large
+            language models make sense of source code.
+          </p>
+          <p>
+            The throughline is care: type-checked puzzle grids, vision models
+            that squint at game screenshots, interfaces that don’t waste your
+            attention. Most of what I make starts as something I wanted for
+            myself and ships once a stranger could enjoy it too. If you’re
+            building something in that spirit, I’d love to hear about it.
+          </p>
+        </div>
+        <div className={styles.contactRow}>
+          <a href="mailto:hqbcodes@gmail.com" className={styles.contactLink}>
+            Email
+          </a>
+          <a
+            href="https://github.com/Pigf00d"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.contactLink}
+          >
+            GitHub ↗
+          </a>
+          <a
+            href="https://linkedin.com/in/hqburke"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.contactLink}
+          >
+            LinkedIn ↗
+          </a>
+          <a href="/resume.pdf" className={styles.contactLink}>
+            Résumé
+          </a>
+        </div>
+      </section>
+      */}
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>

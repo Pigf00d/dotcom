@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 
 const WORDS = ['beautiful', 'art', 'elegant', 'intentional', 'powerful'];
@@ -9,6 +9,8 @@ const INTERVAL_MS = 15_000;
 export default function RotatingWord() {
   const [index, setIndex] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [width, setWidth] = useState<number>();
+  const itemRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -32,14 +34,38 @@ export default function RotatingWord() {
     return () => window.clearInterval(interval);
   }, [reduceMotion]);
 
+  useLayoutEffect(() => {
+    const el = itemRefs.current[index];
+    if (!el) return;
+
+    const update = () => setWidth(el.offsetWidth);
+    update();
+
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    void document.fonts?.ready.then(update);
+
+    return () => observer.disconnect();
+  }, [index]);
+
   return (
-    <span className={styles.rotatingWord} aria-live="polite">
+    <span
+      className={styles.rotatingWord}
+      aria-live="polite"
+      style={width != null ? { width } : undefined}
+    >
       <span
         className={styles.rotatingWordTrack}
         style={{ '--word-index': index } as React.CSSProperties}
       >
-        {WORDS.map((word) => (
-          <span key={word} className={styles.rotatingWordItem}>
+        {WORDS.map((word, i) => (
+          <span
+            key={word}
+            ref={(node) => {
+              itemRefs.current[i] = node;
+            }}
+            className={styles.rotatingWordItem}
+          >
             {word}.
           </span>
         ))}
