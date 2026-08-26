@@ -26,16 +26,18 @@
   font-weight: 300;
   color: var(--ink-primary);
   letter-spacing: 0.08em;
-  line-height: 1.15;
+  line-height: 1.35;
   opacity: 0;
   animation: fadeUp 1.2s ease forwards;
 }
 
 .rotatingWord {
+  --slot: 1.35em;
   display: inline-block;
   vertical-align: bottom;
   overflow: hidden;
-  height: 1.15em;
+  clip-path: inset(0);
+  height: var(--slot);
   text-align: left;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -43,14 +45,15 @@
 .rotatingWordTrack {
   display: flex;
   flex-direction: column;
-  transform: translateY(calc(var(--word-index, 0) * -1.15em));
+  transform: translateY(calc(var(--word-index, 0) * -1 * var(--slot)));
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .rotatingWordItem {
   flex-shrink: 0;
-  height: 1.15em;
-  line-height: 1.15;
+  overflow: hidden;
+  height: var(--slot);
+  line-height: 1.35;
   width: max-content;
   white-space: nowrap;
   color: var(--word-highlight);
@@ -422,6 +425,25 @@
 }
 
 /* ── About ── */
+.aboutLayout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2.5rem 3rem;
+  align-items: start;
+}
+
+.aboutPhoto {
+  width: 11.5rem;
+  height: 11.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border-medium);
+}
+
+.aboutCopy {
+  min-width: 0;
+}
+
 .aboutBody {
   max-width: 620px;
 }
@@ -500,6 +522,16 @@
   .hero {
     min-height: 75dvh;
     padding: 6rem 1.25rem 3rem;
+  }
+
+  .aboutLayout {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .aboutPhoto {
+    width: 6.75rem;
+    height: 6.75rem;
   }
 
   .headline {

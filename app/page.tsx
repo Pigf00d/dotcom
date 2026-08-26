@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.css";
 import RotatingWord from "./RotatingWord";
 // import TechCarousel from "./TechCarousel";
@@ -20,15 +20,15 @@ export default function Home() {
               Research
             </a>
           </li>
-          {/* TODO later: Mini, About
-          <li>
-            <a href="#mini" className={styles.navLink}>
-              Mini
-            </a>
-          </li>
           <li>
             <a href="#about" className={styles.navLink}>
               About
+            </a>
+          </li>
+          {/* TODO later: Mini
+          <li>
+            <a href="#mini" className={styles.navLink}>
+              Mini
             </a>
           </li>
           */}
@@ -98,7 +98,12 @@ export default function Home() {
         <p className={styles.sectionLabel}>Work</p>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.projectGrid}>
-          <Link href="/projects/burntbase" className={styles.projectCard}>
+          <a
+            href="https://burntbase.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
             <img
               src="/burntbase.png"
               alt="Burntbase — Instantly scan bases for 3-star attacks"
@@ -117,8 +122,13 @@ export default function Home() {
               <span className={styles.tag}>Computer Vision</span>
               <span className={styles.tag}>AWS S3</span>
             </div>
-          </Link>
-          <Link href="/projects/crossword" className={styles.projectCard}>
+          </a>
+          <a
+            href="https://crossword-phi-ashy.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
             <img
               src="/crossword.png"
               alt="Crossword — The Mini daily crossword"
@@ -135,7 +145,7 @@ export default function Home() {
               <span className={styles.tag}>TypeScript</span>
               <span className={styles.tag}>Svelte 5</span>
             </div>
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -175,65 +185,82 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TODO later: Mini crossword + About
+      {/* TODO later: Mini crossword
       <section id="mini" className={styles.section}>
         <p className={styles.sectionLabel}>Interlude</p>
         <h2 className={styles.sectionTitle}>The Mini</h2>
         <p className={styles.miniIntro}>
           A five-by-five you can solve right here — built in React for this
           page. The full daily version is the{" "}
-          <Link href="/projects/crossword" className={styles.inlineLink}>
+          <a
+            href="https://crossword-phi-ashy.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.inlineLink}
+          >
             Crossword project
-          </Link>
+          </a>
           .
         </p>
         <MiniCrossword />
       </section>
+      */}
 
+      {/* ── About ── */}
       <section id="about" className={styles.section}>
         <p className={styles.sectionLabel}>About</p>
         <h2 className={styles.sectionTitle}>Hello</h2>
-        <div className={styles.aboutBody}>
-          <p>
-            I’m Henry, a software engineer who likes building small, finished
-            things — tools for games I actually play, puzzles I wished
-            existed, and, along the way, a research paper on how large
-            language models make sense of source code.
-          </p>
-          <p>
-            The throughline is care: type-checked puzzle grids, vision models
-            that squint at game screenshots, interfaces that don’t waste your
-            attention. Most of what I make starts as something I wanted for
-            myself and ships once a stranger could enjoy it too. If you’re
-            building something in that spirit, I’d love to hear about it.
-          </p>
-        </div>
-        <div className={styles.contactRow}>
-          <a href="mailto:hqbcodes@gmail.com" className={styles.contactLink}>
-            Email
-          </a>
-          <a
-            href="https://github.com/Pigf00d"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactLink}
-          >
-            GitHub ↗
-          </a>
-          <a
-            href="https://linkedin.com/in/hqburke"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactLink}
-          >
-            LinkedIn ↗
-          </a>
-          <a href="/resume.pdf" className={styles.contactLink}>
-            Résumé
-          </a>
+        <div className={styles.aboutLayout}>
+          <Image
+            src="/profile.jpg"
+            alt="Henry Burke"
+            width={320}
+            height={320}
+            className={styles.aboutPhoto}
+          />
+          <div className={styles.aboutCopy}>
+            <div className={styles.aboutBody}>
+              <p>
+                I’m Henry, a software engineer who likes building small, finished
+                things — tools for games I actually play, puzzles I wished
+                existed, and, along the way, a research paper on how large
+                language models make sense of source code.
+              </p>
+              <p>
+                The throughline is care: type-checked puzzle grids, vision models
+                that squint at game screenshots, interfaces that don’t waste your
+                attention. Most of what I make starts as something I wanted for
+                myself and ships once a stranger could enjoy it too. If you’re
+                building something in that spirit, I’d love to hear about it.
+              </p>
+            </div>
+            <div className={styles.contactRow}>
+              <a href="mailto:hqbcodes@gmail.com" className={styles.contactLink}>
+                Email
+              </a>
+              <a
+                href="https://github.com/Pigf00d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                GitHub ↗
+              </a>
+              <a
+                href="https://linkedin.com/in/hqburke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                LinkedIn ↗
+              </a>
+              <a href="/resume.pdf" className={styles.contactLink}>
+                Résumé
+              </a>
+            </div>
+          </div>
         </div>
       </section>
-      */}
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>
