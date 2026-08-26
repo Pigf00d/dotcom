@@ -1,5 +1,7 @@
 .scene {
   --cycle-duration: 60s;
+  --orbit-radius: min(68vw, 54vh);
+  --orbit-pivot-y: 76%;
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -77,23 +79,22 @@
 .sunTrack,
 .moonTrack {
   position: absolute;
-  left: 50%;
-  top: 48%;
+  top: 0;
+  left: 0;
   width: clamp(4.5rem, 8vw, 7rem);
   aspect-ratio: 1;
-  will-change: transform, opacity;
-  animation-duration: var(--cycle-duration);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  offset-path: circle(var(--orbit-radius) at 50% var(--orbit-pivot-y));
+  offset-anchor: center;
+  offset-rotate: 0deg;
+  animation: celestialOrbit var(--cycle-duration) linear infinite;
 }
 
 .sunTrack {
-  animation-name: sunJourney;
+  animation-delay: calc(var(--cycle-duration) * -0.5);
 }
 
 .moonTrack {
   width: clamp(3.5rem, 6vw, 5.5rem);
-  animation-name: moonJourney;
 }
 
 .sun,
@@ -196,14 +197,17 @@
 }
 
 .horizon {
+  display: block;
   position: absolute;
-  inset: auto 0 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: clamp(9rem, 24vh, 15rem);
 }
 
 .horizonBack {
-  fill: rgba(25, 34, 48, 0.38);
+  fill: #192230;
 }
 
 .horizonFront {
@@ -214,51 +218,6 @@
   background:
     radial-gradient(ellipse at center, rgba(5, 10, 18, 0.42) 0%, rgba(5, 10, 18, 0.1) 48%, transparent 72%),
     linear-gradient(180deg, rgba(4, 8, 14, 0.16), rgba(4, 8, 14, 0.26));
-}
-
-.motionControl {
-  position: absolute;
-  right: clamp(1rem, 3vw, 2rem);
-  bottom: clamp(1rem, 3vw, 1.75rem);
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-height: 2.25rem;
-  padding: 0.45rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  border-radius: 100px;
-  background: rgba(7, 12, 21, 0.38);
-  color: rgba(255, 255, 255, 0.9);
-  font: 400 0.6875rem/1 var(--font-body), sans-serif;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease;
-}
-
-.motionControl:hover {
-  background: rgba(7, 12, 21, 0.62);
-  border-color: rgba(255, 255, 255, 0.65);
-}
-
-.motionControl:focus-visible {
-  outline: 2px solid #ffffff;
-  outline-offset: 3px;
-}
-
-.motionControl:disabled {
-  cursor: default;
-  opacity: 0.72;
-}
-
-.controlIcon {
-  display: inline-flex;
-  width: 0.85rem;
-  justify-content: center;
-  font-size: 0.65rem;
 }
 
 .paused .artwork *,
@@ -339,52 +298,12 @@
   }
 }
 
-@keyframes sunJourney {
-  0% {
-    opacity: 0;
-    transform: translate(-58vw, 35vh) scale(0.76);
+@keyframes celestialOrbit {
+  from {
+    offset-distance: 0%;
   }
-  8% {
-    opacity: 1;
-  }
-  26% {
-    transform: translate(-28vw, -25vh) scale(0.92);
-  }
-  45% {
-    opacity: 1;
-    transform: translate(4vw, -35vh) scale(1);
-  }
-  67% {
-    opacity: 1;
-    transform: translate(40vw, 28vh) scale(0.9);
-  }
-  73%,
-  100% {
-    opacity: 0;
-    transform: translate(48vw, 42vh) scale(0.78);
-  }
-}
-
-@keyframes moonJourney {
-  0%,
-  62% {
-    opacity: 0;
-    transform: translate(-48vw, 42vh) scale(0.82);
-  }
-  69% {
-    opacity: 1;
-  }
-  82% {
-    opacity: 1;
-    transform: translate(-22vw, -18vh) scale(0.94);
-  }
-  96% {
-    opacity: 1;
-    transform: translate(8vw, -31vh) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(18vw, -34vh) scale(0.96);
+  to {
+    offset-distance: 100%;
   }
 }
 
@@ -451,12 +370,6 @@
 }
 
 @media (max-width: 640px) {
-  .motionControl {
-    right: 1rem;
-    bottom: 1rem;
-    min-height: 2.5rem;
-  }
-
   .horizon {
     height: 9rem;
   }
@@ -479,9 +392,11 @@
   }
 
   .moonTrack {
-    opacity: 1;
-    transform: translate(-24vw, -20vh);
+    offset-path: none;
     animation: none;
+    top: 22%;
+    left: 28%;
+    opacity: 1;
   }
 
   .haze {

@@ -9,7 +9,6 @@
   --accent-strong: #294f63;
   --border-subtle: rgba(23, 28, 35, 0.1);
   --border-strong: rgba(23, 28, 35, 0.2);
-  --nav-bg: rgba(243, 241, 236, 0.96);
   --shadow-card: 0 20px 55px rgba(34, 43, 51, 0.12);
   --hero-text: #fffdf7;
   --hero-muted: rgba(255, 253, 247, 0.8);
@@ -30,7 +29,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 48px;
 }
 
 html,

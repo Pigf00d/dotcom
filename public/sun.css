@@ -1,0 +1,176 @@
+/* ============================================================
+   SUN — three looks: .sun--rising / .sun--midday / .sun--setting
+   Pure CSS. No JS. Swap the modifier class and it transitions.
+
+   Markup:
+     <div class="sun sun--midday">
+       <span class="sun__haze"></span>
+       <span class="sun__glow"></span>
+       <span class="sun__rays"></span>
+       <span class="sun__disc"></span>
+     </div>
+
+   Every knob is a custom property, so you can override any of
+   them inline (style="--sun-size:80px") or in your own CSS.
+   ============================================================ */
+
+/* Registering the properties is what lets them animate.
+   Without these @property blocks the looks still work, they
+   just snap instead of fading. */
+@property --sun-size         { syntax: '<length>'; inherits: true; initial-value: 110px; }
+@property --sun-core         { syntax: '<color>';  inherits: true; initial-value: #fffbe8; }
+@property --sun-edge         { syntax: '<color>';  inherits: true; initial-value: #ffce5e; }
+@property --sun-glow         { syntax: '<color>';  inherits: true; initial-value: rgba(255, 228, 158, .8); }
+@property --sun-glow-scale   { syntax: '<number>'; inherits: true; initial-value: 3; }
+@property --sun-glow-opacity { syntax: '<number>'; inherits: true; initial-value: .55; }
+@property --sun-ray-opacity  { syntax: '<number>'; inherits: true; initial-value: .4; }
+@property --sun-haze-opacity { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+.sun {
+  --sun-size: 110px;
+  --sun-core: #fffbe8;
+  --sun-edge: #ffce5e;
+  --sun-glow: rgba(255, 228, 158, .8);
+  --sun-glow-scale: 3;
+  --sun-glow-opacity: .55;
+  --sun-ray-opacity: .4;
+  --sun-haze-opacity: 0;
+
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--sun-size);
+  height: var(--sun-size);
+  transition:
+    --sun-size 900ms ease,
+    --sun-core 900ms ease,
+    --sun-edge 900ms ease,
+    --sun-glow 900ms ease,
+    --sun-glow-scale 900ms ease,
+    --sun-glow-opacity 900ms ease,
+    --sun-ray-opacity 900ms ease,
+    --sun-haze-opacity 900ms ease;
+}
+
+/* every layer stacks on the same centre point */
+.sun > * {
+  position: absolute;
+  pointer-events: none;
+}
+
+.sun__disc {
+  width: var(--sun-size);
+  height: var(--sun-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 44%,
+    #fff 0%,
+    var(--sun-core) 36%,
+    var(--sun-edge) 100%);
+  box-shadow: 0 0 calc(var(--sun-size) * .45) var(--sun-edge);
+}
+
+.sun__glow {
+  width: calc(var(--sun-size) * var(--sun-glow-scale));
+  height: calc(var(--sun-size) * var(--sun-glow-scale));
+  border-radius: 50%;
+  opacity: var(--sun-glow-opacity);
+  background: radial-gradient(circle, var(--sun-glow) 0%, transparent 68%);
+}
+
+/* thin spokes, only really visible when the sun is high */
+.sun__rays {
+  width: calc(var(--sun-size) * 4.4);
+  height: calc(var(--sun-size) * 4.4);
+  border-radius: 50%;
+  opacity: var(--sun-ray-opacity);
+  background: repeating-conic-gradient(from 0deg,
+    rgba(255, 246, 214, .55) 0deg 1.4deg,
+    transparent 1.4deg 11deg);
+  -webkit-mask: radial-gradient(circle, #000 12%, rgba(0, 0, 0, .5) 30%, transparent 62%);
+          mask: radial-gradient(circle, #000 12%, rgba(0, 0, 0, .5) 30%, transparent 62%);
+  animation: sun-spin 140s linear infinite;
+}
+
+/* flattened atmospheric smear, only near the horizon */
+.sun__haze {
+  width: calc(var(--sun-size) * 3.6);
+  height: calc(var(--sun-size) * .62);
+  border-radius: 50%;
+  opacity: var(--sun-haze-opacity);
+  filter: blur(calc(var(--sun-size) * .12));
+  background: radial-gradient(closest-side, var(--sun-glow) 0%, transparent 100%);
+}
+
+@keyframes sun-spin { to { transform: rotate(360deg); } }
+
+/* ---------- the three looks ---------- */
+
+/* low, swollen, deep amber, soft-edged */
+.sun--rising {
+  --sun-size: 150px;
+  --sun-core: #ffb46b;
+  --sun-edge: #ff6a2c;
+  --sun-glow: rgba(255, 122, 60, .8);
+  --sun-glow-scale: 4.4;
+  --sun-glow-opacity: .8;
+  --sun-ray-opacity: 0;
+  --sun-haze-opacity: .55;
+}
+
+/* small, hot, white-gold, sharp spokes */
+.sun--midday {
+  --sun-size: 100px;
+  --sun-core: #fffbe8;
+  --sun-edge: #ffce5e;
+  --sun-glow: rgba(255, 228, 158, .8);
+  --sun-glow-scale: 2.8;
+  --sun-glow-opacity: .5;
+  --sun-ray-opacity: .45;
+  --sun-haze-opacity: 0;
+}
+
+/* biggest and reddest, heavy horizontal haze */
+.sun--setting {
+  --sun-size: 160px;
+  --sun-core: #ff9d63;
+  --sun-edge: #e33b2e;
+  --sun-glow: rgba(255, 79, 42, .8);
+  --sun-glow-scale: 5;
+  --sun-glow-opacity: .85;
+  --sun-ray-opacity: 0;
+  --sun-haze-opacity: .7;
+}
+
+/* ---------- optional: loop the three looks with no JS ---------- */
+.sun--cycle { animation: sun-cycle 15s ease-in-out infinite; }
+
+@keyframes sun-cycle {
+  0%, 16% {
+    --sun-size: 150px; --sun-core: #ffb46b; --sun-edge: #ff6a2c;
+    --sun-glow: rgba(255, 122, 60, .8);
+    --sun-glow-scale: 4.4; --sun-glow-opacity: .8;
+    --sun-ray-opacity: 0; --sun-haze-opacity: .55;
+  }
+  33%, 49% {
+    --sun-size: 100px; --sun-core: #fffbe8; --sun-edge: #ffce5e;
+    --sun-glow: rgba(255, 228, 158, .8);
+    --sun-glow-scale: 2.8; --sun-glow-opacity: .5;
+    --sun-ray-opacity: .45; --sun-haze-opacity: 0;
+  }
+  66%, 82% {
+    --sun-size: 160px; --sun-core: #ff9d63; --sun-edge: #e33b2e;
+    --sun-glow: rgba(255, 79, 42, .8);
+    --sun-glow-scale: 5; --sun-glow-opacity: .85;
+    --sun-ray-opacity: 0; --sun-haze-opacity: .7;
+  }
+  100% {
+    --sun-size: 150px; --sun-core: #ffb46b; --sun-edge: #ff6a2c;
+    --sun-glow: rgba(255, 122, 60, .8);
+    --sun-glow-scale: 4.4; --sun-glow-opacity: .8;
+    --sun-ray-opacity: 0; --sun-haze-opacity: .55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sun, .sun--cycle, .sun__rays { transition: none; animation: none; }
+}

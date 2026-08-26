@@ -7,7 +7,7 @@
   justify-content: center;
   min-height: 90vh;
   min-height: 90dvh;
-  padding: 8rem 2rem 6rem;
+  padding: 6rem 2rem;
   overflow: hidden;
   background: #111a2b;
   color: var(--hero-text);
@@ -21,16 +21,6 @@
   align-items: center;
   text-align: center;
   max-width: 960px;
-}
-
-.heroEyebrow {
-  margin-bottom: 1.25rem;
-  color: var(--hero-muted);
-  font-family: var(--font-body), sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
 }
 
 .visuallyHidden {
@@ -56,14 +46,30 @@
 }
 
 .rotatingWord {
-  --slot: 1.35em;
+  --line: 1.08em;
+  --descender: 0.42em;
+  --slot: calc(var(--line) + var(--descender));
+  position: relative;
   display: inline-block;
-  vertical-align: bottom;
-  overflow: hidden;
-  clip-path: inset(0);
-  height: var(--slot);
+  vertical-align: baseline;
   text-align: left;
+  line-height: inherit;
+  overflow: visible;
   transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.rotatingWordSizer {
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.rotatingWordViewport {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: var(--slot);
+  overflow: hidden;
 }
 
 .rotatingWordTrack {
@@ -75,9 +81,8 @@
 
 .rotatingWordItem {
   flex-shrink: 0;
-  overflow: hidden;
   height: var(--slot);
-  line-height: 1.35;
+  line-height: var(--line);
   width: max-content;
   white-space: nowrap;
   color: var(--hero-accent);
@@ -133,44 +138,6 @@
   font-size: 0.75rem;
   font-weight: 300;
   letter-spacing: 0.08em;
-}
-
-/* ── Navigation ── */
-.nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  height: 56px;
-  padding: 0 clamp(1.25rem, 4vw, 3.5rem);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  background: var(--nav-bg);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.navLinks {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.navLink {
-  font-family: var(--font-body), sans-serif;
-  font-size: 0.6875rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  transition: color 0.3s ease;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.navLink:hover {
-  color: var(--accent-strong);
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 
 /* ── Tech Carousel ── */
@@ -541,7 +508,6 @@
 .contactLink:focus-visible,
 .projectCard:focus-visible,
 .paperCard:focus-visible,
-.navLink:focus-visible,
 .socialLink:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 4px;
@@ -586,7 +552,7 @@
 @media (max-width: 768px) {
   .hero {
     min-height: 86dvh;
-    padding: 7rem 1.25rem 5rem;
+    padding: 5rem 1.25rem;
   }
 
   .aboutLayout {
@@ -600,18 +566,6 @@
 
   .headline {
     letter-spacing: 0.015em;
-  }
-
-  .heroEyebrow {
-    margin-bottom: 1rem;
-  }
-
-  .nav {
-    padding: 0 1.25rem;
-  }
-
-  .navLinks {
-    gap: 1.25rem;
   }
 
   .section {
@@ -654,8 +608,7 @@
   .headline,
   .name,
   .tagline,
-  .heroLinks,
-  .nav {
+  .heroLinks {
     animation: none;
     opacity: 1;
   }

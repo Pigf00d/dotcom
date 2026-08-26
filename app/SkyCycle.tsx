@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './SkyCycle.module.css';
 
+// Later: sync page light/dark with this cycle; at night, street lamps illuminate text.
 export default function SkyCycle() {
   const sceneRef = useRef<HTMLDivElement>(null);
-  const [manuallyPaused, setManuallyPaused] = useState(false);
   const [isInView, setIsInView] = useState(true);
   const [isDocumentVisible, setIsDocumentVisible] = useState(true);
   const [reduceMotion, setReduceMotion] = useState(false);
@@ -47,8 +47,7 @@ export default function SkyCycle() {
     };
   }, []);
 
-  const isPaused =
-    manuallyPaused || !isInView || !isDocumentVisible || reduceMotion;
+  const isPaused = !isInView || !isDocumentVisible || reduceMotion;
 
   return (
     <div
@@ -111,35 +110,22 @@ export default function SkyCycle() {
         >
           <path
             className={styles.horizonBack}
-            d="M0 119 92 77l69 26 104-65 93 50 112-43 94 60 113-81 109 59 90-34 112 66 89-44 104 46 149-72v175H0Z"
+            d="M-4 119 92 77l69 26 104-65 93 50 112-43 94 60 113-81 109 59 90-34 112 66 89-44 104 46 L1444 45 V224 H-4 Z"
           />
           <path
             className={styles.horizonFront}
-            d="m0 151 126-36 101 34 120-53 113 60 130-48 130 60 134-66 107 56 130-45 126 44 143-67v120H0Z"
+            d="M-4 151 126 115 227 149 347 96 460 156 590 108 720 168 854 102 961 158 1091 113 1217 157 1444 90 V224 H-4 Z"
+          />
+          <rect
+            className={styles.horizonFront}
+            x="-4"
+            y="196"
+            width="1448"
+            height="28"
           />
         </svg>
         <div className={styles.contrastVeil} />
       </div>
-
-      <button
-        type="button"
-        className={styles.motionControl}
-        onClick={() => setManuallyPaused((paused) => !paused)}
-        aria-pressed={manuallyPaused}
-        aria-label={
-          reduceMotion
-            ? 'Sky animation disabled by reduced motion preference'
-            : manuallyPaused
-              ? 'Play sky animation'
-              : 'Pause sky animation'
-        }
-        disabled={reduceMotion}
-      >
-        <span className={styles.controlIcon} aria-hidden="true">
-          {reduceMotion ? '—' : manuallyPaused ? '▶' : 'Ⅱ'}
-        </span>
-        {reduceMotion ? 'Motion reduced' : manuallyPaused ? 'Play sky' : 'Pause sky'}
-      </button>
     </div>
   );
 }

@@ -8,39 +8,10 @@ import SkyCycle from "./SkyCycle";
 export default function Home() {
   return (
     <>
-      {/* ── Navigation ── */}
-      <nav className={styles.nav}>
-        <ul className={styles.navLinks}>
-          <li>
-            <a href="#about" className={styles.navLink}>
-              About
-            </a>
-          </li>
-          <li>
-            <a href="#projects" className={styles.navLink}>
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="#research" className={styles.navLink}>
-              Research
-            </a>
-          </li>
-          {/* TODO later: Mini
-          <li>
-            <a href="#mini" className={styles.navLink}>
-              Mini
-            </a>
-          </li>
-          */}
-        </ul>
-      </nav>
-
       {/* ── Hero ── */}
       <section className={styles.hero} aria-labelledby="hero-title">
         <SkyCycle />
         <div className={styles.heroContent}>
-          <p className={styles.heroEyebrow}>Creative engineering</p>
           <h1 id="hero-title" className={styles.headline}>
             Software can be <RotatingWord />
           </h1>
@@ -112,8 +83,7 @@ export default function Home() {
           </div>
           <div className={styles.aboutCopy}>
             <p className={styles.aboutLead}>
-              I build thoughtful software that makes complex ideas feel
-              simple.
+              doing cool stuff
             </p>
             <div className={styles.aboutBody}>
               <p>

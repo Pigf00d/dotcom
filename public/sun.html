@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sun</title>
+<link rel="stylesheet" href="sun.css">
+<style>
+  /* Page styling only — not part of the component. Delete when pasting. */
+  body{margin:0;min-height:100vh;background:#0d1020;color:#cfd6e6;
+       font:14px/1.6 ui-sans-serif,system-ui,sans-serif;
+       display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:center;padding:5rem 2rem}
+  figure{margin:0;width:300px;height:300px;display:grid;place-items:center;position:relative}
+  figcaption{position:absolute;bottom:0;left:0;right:0;text-align:center;
+       font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;opacity:.55}
+</style>
+</head>
+<body>
+
+<figure>
+  <!-- ===== copy from here ===== -->
+  <div class="sun sun--rising">
+    <span class="sun__haze"></span>
+    <span class="sun__glow"></span>
+    <span class="sun__rays"></span>
+    <span class="sun__disc"></span>
+  </div>
+  <!-- ===== to here. Swap the second class for sun--midday or
+       sun--setting. Add sun--cycle to loop all three, no JS. ===== -->
+  <figcaption>sun--rising</figcaption>
+</figure>
+
+<figure>
+  <div class="sun sun--midday">
+    <span class="sun__haze"></span>
+    <span class="sun__glow"></span>
+    <span class="sun__rays"></span>
+    <span class="sun__disc"></span>
+  </div>
+  <figcaption>sun--midday</figcaption>
+</figure>
+
+<figure>
+  <div class="sun sun--setting">
+    <span class="sun__haze"></span>
+    <span class="sun__glow"></span>
+    <span class="sun__rays"></span>
+    <span class="sun__disc"></span>
+  </div>
+  <figcaption>sun--setting</figcaption>
+</figure>
+
+<figure>
+  <div class="sun sun--cycle">
+    <span class="sun__haze"></span>
+    <span class="sun__glow"></span>
+    <span class="sun__rays"></span>
+    <span class="sun__disc"></span>
+  </div>
+  <figcaption>sun--cycle</figcaption>
+</figure>
+
+</body>
+</html>
