@@ -1,44 +1,18 @@
-import Link from "next/link";
+import Image from "next/image";
 import styles from "./page.module.css";
 import RotatingWord from "./RotatingWord";
+import SkyCycle from "./SkyCycle";
 // import TechCarousel from "./TechCarousel";
 // import MiniCrossword from "./MiniCrossword";
 
 export default function Home() {
   return (
     <>
-      {/* ── Navigation ── */}
-      <nav className={styles.nav}>
-        <ul className={styles.navLinks}>
-          <li>
-            <a href="#projects" className={styles.navLink}>
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="#research" className={styles.navLink}>
-              Research
-            </a>
-          </li>
-          {/* TODO later: Mini, About
-          <li>
-            <a href="#mini" className={styles.navLink}>
-              Mini
-            </a>
-          </li>
-          <li>
-            <a href="#about" className={styles.navLink}>
-              About
-            </a>
-          </li>
-          */}
-        </ul>
-      </nav>
-
       {/* ── Hero ── */}
-      <section className={styles.hero}>
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <SkyCycle />
         <div className={styles.heroContent}>
-          <h1 className={styles.headline}>
+          <h1 id="hero-title" className={styles.headline}>
             Software can be <RotatingWord />
           </h1>
           <p className={styles.name}>Henry Burke</p>
@@ -90,6 +64,70 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── About ── */}
+      <section id="about" className={`${styles.section} ${styles.aboutSection}`}>
+        <div className={styles.sectionHeading}>
+          <p className={styles.sectionLabel}>Profile</p>
+          <h2 className={styles.sectionTitle}>About me</h2>
+        </div>
+        <div className={styles.aboutLayout}>
+          <div className={styles.aboutPhotoFrame}>
+            <Image
+              src="/profile.jpg"
+              alt="Henry Burke"
+              width={360}
+              height={450}
+              sizes="(max-width: 768px) 72vw, 360px"
+              className={styles.aboutPhoto}
+            />
+          </div>
+          <div className={styles.aboutCopy}>
+            <p className={styles.aboutLead}>
+              doing cool stuff
+            </p>
+            <div className={styles.aboutBody}>
+              <p>
+                I’m Henry, a software engineer who likes building small,
+                finished things — tools for games I actually play, puzzles I
+                wished existed, and, along the way, research on how large
+                language models make sense of source code.
+              </p>
+              <p>
+                The throughline is care: type-checked puzzle grids, vision
+                models that squint at game screenshots, and interfaces that
+                respect people’s attention. Most of what I make starts as
+                something I wanted for myself and ships once a stranger could
+                enjoy it too.
+              </p>
+            </div>
+            <div className={styles.contactRow} aria-label="Contact links">
+              <a
+                href="mailto:hqbcodes@gmail.com"
+                className={styles.contactLink}
+              >
+                Email
+              </a>
+              <a
+                href="https://github.com/Pigf00d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/hqburke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Tech Carousel ── */}
       {/* <TechCarousel /> */}
 
@@ -98,10 +136,18 @@ export default function Home() {
         <p className={styles.sectionLabel}>Work</p>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.projectGrid}>
-          <Link href="/projects/burntbase" className={styles.projectCard}>
-            <img
+          <a
+            href="https://burntbase.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
+            <Image
               src="/burntbase.png"
               alt="Burntbase — Instantly scan bases for 3-star attacks"
+              width={800}
+              height={400}
+              sizes="(max-width: 700px) 100vw, 50vw"
               className={styles.projectImage}
             />
             <h3 className={styles.projectName}>Burntbase</h3>
@@ -117,11 +163,19 @@ export default function Home() {
               <span className={styles.tag}>Computer Vision</span>
               <span className={styles.tag}>AWS S3</span>
             </div>
-          </Link>
-          <Link href="/projects/crossword" className={styles.projectCard}>
-            <img
+          </a>
+          <a
+            href="https://crossword-phi-ashy.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.projectCard}
+          >
+            <Image
               src="/crossword.png"
               alt="Crossword — The Mini daily crossword"
+              width={800}
+              height={400}
+              sizes="(max-width: 700px) 100vw, 50vw"
               className={styles.projectImage}
             />
             <h3 className={styles.projectName}>Crossword</h3>
@@ -135,7 +189,7 @@ export default function Home() {
               <span className={styles.tag}>TypeScript</span>
               <span className={styles.tag}>Svelte 5</span>
             </div>
-          </Link>
+          </a>
         </div>
       </section>
 
@@ -175,63 +229,24 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TODO later: Mini crossword + About
+      {/* TODO later: Mini crossword
       <section id="mini" className={styles.section}>
         <p className={styles.sectionLabel}>Interlude</p>
         <h2 className={styles.sectionTitle}>The Mini</h2>
         <p className={styles.miniIntro}>
           A five-by-five you can solve right here — built in React for this
           page. The full daily version is the{" "}
-          <Link href="/projects/crossword" className={styles.inlineLink}>
+          <a
+            href="https://crossword-phi-ashy.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.inlineLink}
+          >
             Crossword project
-          </Link>
+          </a>
           .
         </p>
         <MiniCrossword />
-      </section>
-
-      <section id="about" className={styles.section}>
-        <p className={styles.sectionLabel}>About</p>
-        <h2 className={styles.sectionTitle}>Hello</h2>
-        <div className={styles.aboutBody}>
-          <p>
-            I’m Henry, a software engineer who likes building small, finished
-            things — tools for games I actually play, puzzles I wished
-            existed, and, along the way, a research paper on how large
-            language models make sense of source code.
-          </p>
-          <p>
-            The throughline is care: type-checked puzzle grids, vision models
-            that squint at game screenshots, interfaces that don’t waste your
-            attention. Most of what I make starts as something I wanted for
-            myself and ships once a stranger could enjoy it too. If you’re
-            building something in that spirit, I’d love to hear about it.
-          </p>
-        </div>
-        <div className={styles.contactRow}>
-          <a href="mailto:hqbcodes@gmail.com" className={styles.contactLink}>
-            Email
-          </a>
-          <a
-            href="https://github.com/Pigf00d"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactLink}
-          >
-            GitHub ↗
-          </a>
-          <a
-            href="https://linkedin.com/in/hqburke"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.contactLink}
-          >
-            LinkedIn ↗
-          </a>
-          <a href="/resume.pdf" className={styles.contactLink}>
-            Résumé
-          </a>
-        </div>
       </section>
       */}
 

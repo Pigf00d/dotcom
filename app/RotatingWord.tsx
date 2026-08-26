@@ -38,7 +38,7 @@ export default function RotatingWord() {
     const el = itemRefs.current[index];
     if (!el) return;
 
-    const update = () => setWidth(el.offsetWidth);
+    const update = () => setWidth(Math.ceil(el.getBoundingClientRect().width));
     update();
 
     const observer = new ResizeObserver(update);
@@ -49,27 +49,33 @@ export default function RotatingWord() {
   }, [index]);
 
   return (
-    <span
-      className={styles.rotatingWord}
-      aria-live="polite"
-      style={width != null ? { width } : undefined}
-    >
+    <>
+      <span className={styles.visuallyHidden}>intentional.</span>
       <span
-        className={styles.rotatingWordTrack}
-        style={{ '--word-index': index } as React.CSSProperties}
+        className={styles.rotatingWord}
+        aria-hidden="true"
+        style={width != null ? { width } : undefined}
       >
-        {WORDS.map((word, i) => (
+        <span className={styles.rotatingWordSizer}>{WORDS[index]}.</span>
+        <span className={styles.rotatingWordViewport}>
           <span
-            key={word}
-            ref={(node) => {
-              itemRefs.current[i] = node;
-            }}
-            className={styles.rotatingWordItem}
+            className={styles.rotatingWordTrack}
+            style={{ '--word-index': index } as React.CSSProperties}
           >
-            {word}.
+            {WORDS.map((word, i) => (
+              <span
+                key={word}
+                ref={(node) => {
+                  itemRefs.current[i] = node;
+                }}
+                className={styles.rotatingWordItem}
+              >
+                {word}.
+              </span>
+            ))}
           </span>
-        ))}
+        </span>
       </span>
-    </span>
+    </>
   );
 }

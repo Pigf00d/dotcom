@@ -1,0 +1,177 @@
+/* ============================================================
+   MOON — three looks: .moon--rising / .moon--midnight / .moon--setting
+   Pure CSS. No JS. Swap the modifier class and it transitions.
+
+   Markup (the five craters are placed by CSS, so the spans
+   stay empty and identical):
+     <div class="moon moon--midnight">
+       <span class="moon__glow"></span>
+       <span class="moon__halo"></span>
+       <span class="moon__disc">
+         <i></i><i></i><i></i><i></i><i></i>
+       </span>
+     </div>
+   ============================================================ */
+
+@property --moon-size         { syntax: '<length>'; inherits: true; initial-value: 100px; }
+@property --moon-lit          { syntax: '<color>';  inherits: true; initial-value: #f8faff; }
+@property --moon-shade        { syntax: '<color>';  inherits: true; initial-value: #c3cfe6; }
+@property --moon-glow         { syntax: '<color>';  inherits: true; initial-value: rgba(179, 204, 255, .75); }
+@property --moon-glow-scale   { syntax: '<number>'; inherits: true; initial-value: 3; }
+@property --moon-glow-opacity { syntax: '<number>'; inherits: true; initial-value: .38; }
+@property --moon-halo-opacity { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --moon-fade         { syntax: '<number>'; inherits: true; initial-value: 1; }
+
+.moon {
+  --moon-size: 100px;
+  --moon-lit: #f8faff;
+  --moon-shade: #c3cfe6;
+  --moon-glow: rgba(179, 204, 255, .75);
+  --moon-glow-scale: 3;
+  --moon-glow-opacity: .38;
+  --moon-halo-opacity: 0;
+  --moon-fade: 1;
+
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: var(--moon-size);
+  height: var(--moon-size);
+  transition:
+    --moon-size 900ms ease,
+    --moon-lit 900ms ease,
+    --moon-shade 900ms ease,
+    --moon-glow 900ms ease,
+    --moon-glow-scale 900ms ease,
+    --moon-glow-opacity 900ms ease,
+    --moon-halo-opacity 900ms ease,
+    --moon-fade 900ms ease;
+}
+
+.moon > * {
+  position: absolute;
+  pointer-events: none;
+}
+
+.moon__disc {
+  width: var(--moon-size);
+  height: var(--moon-size);
+  border-radius: 50%;
+  overflow: hidden;
+  opacity: var(--moon-fade);
+  background: radial-gradient(circle at 38% 34%,
+    var(--moon-lit) 0%,
+    var(--moon-lit) 46%,
+    var(--moon-shade) 100%);
+  /* the inset shadow is what makes it read as a sphere */
+  box-shadow:
+    inset calc(var(--moon-size) * -.12) calc(var(--moon-size) * -.1) calc(var(--moon-size) * .3) rgba(30, 24, 48, .5),
+    0 0 calc(var(--moon-size) * .55) var(--moon-glow);
+}
+
+/* craters: same empty <i>, positioned individually */
+.moon__disc i {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--moon-shade);
+  opacity: .5;
+  box-shadow: inset 0 -.05em .12em rgba(0, 0, 0, .18);
+}
+.moon__disc i:nth-child(1) { width: 26%; height: 26%; left: 18%; top: 22%; }
+.moon__disc i:nth-child(2) { width: 15%; height: 15%; left: 52%; top: 16%; }
+.moon__disc i:nth-child(3) { width: 34%; height: 32%; left: 44%; top: 46%; }
+.moon__disc i:nth-child(4) { width: 12%; height: 12%; left: 24%; top: 62%; }
+.moon__disc i:nth-child(5) { width:  9%; height:  9%; left: 66%; top: 70%; }
+
+.moon__glow {
+  width: calc(var(--moon-size) * var(--moon-glow-scale));
+  height: calc(var(--moon-size) * var(--moon-glow-scale));
+  border-radius: 50%;
+  opacity: var(--moon-glow-opacity);
+  background: radial-gradient(circle, var(--moon-glow) 0%, transparent 64%);
+}
+
+/* the thin ice ring you only get on a cold, high moon */
+.moon__halo {
+  width: calc(var(--moon-size) * 4.6);
+  height: calc(var(--moon-size) * 4.6);
+  border-radius: 50%;
+  opacity: var(--moon-halo-opacity);
+  background: radial-gradient(circle,
+    transparent 52%,
+    rgba(196, 216, 255, .18) 60%,
+    rgba(196, 216, 255, .05) 66%,
+    transparent 74%);
+}
+
+/* ---------- the three looks ---------- */
+
+/* harvest moon: large, amber, hazy */
+.moon--rising {
+  --moon-size: 132px;
+  --moon-lit: #ffd9a8;
+  --moon-shade: #d19464;
+  --moon-glow: rgba(255, 159, 94, .75);
+  --moon-glow-scale: 4;
+  --moon-glow-opacity: .6;
+  --moon-halo-opacity: 0;
+  --moon-fade: 1;
+}
+
+/* high and cold: small, blue-white, crisp, ringed */
+.moon--midnight {
+  --moon-size: 96px;
+  --moon-lit: #f8faff;
+  --moon-shade: #c3cfe6;
+  --moon-glow: rgba(179, 204, 255, .75);
+  --moon-glow-scale: 2.9;
+  --moon-glow-opacity: .38;
+  --moon-halo-opacity: .85;
+  --moon-fade: 1;
+}
+
+/* going down into dawn: washed out, losing contrast */
+.moon--setting {
+  --moon-size: 124px;
+  --moon-lit: #e7e3ec;
+  --moon-shade: #a49fb4;
+  --moon-glow: rgba(154, 166, 200, .7);
+  --moon-glow-scale: 3.6;
+  --moon-glow-opacity: .3;
+  --moon-halo-opacity: 0;
+  --moon-fade: .78;
+}
+
+/* ---------- optional: loop the three looks with no JS ---------- */
+.moon--cycle { animation: moon-cycle 15s ease-in-out infinite; }
+
+@keyframes moon-cycle {
+  0%, 16% {
+    --moon-size: 132px; --moon-lit: #ffd9a8; --moon-shade: #d19464;
+    --moon-glow: rgba(255, 159, 94, .75);
+    --moon-glow-scale: 4; --moon-glow-opacity: .6;
+    --moon-halo-opacity: 0; --moon-fade: 1;
+  }
+  33%, 49% {
+    --moon-size: 96px; --moon-lit: #f8faff; --moon-shade: #c3cfe6;
+    --moon-glow: rgba(179, 204, 255, .75);
+    --moon-glow-scale: 2.9; --moon-glow-opacity: .38;
+    --moon-halo-opacity: .85; --moon-fade: 1;
+  }
+  66%, 82% {
+    --moon-size: 124px; --moon-lit: #e7e3ec; --moon-shade: #a49fb4;
+    --moon-glow: rgba(154, 166, 200, .7);
+    --moon-glow-scale: 3.6; --moon-glow-opacity: .3;
+    --moon-halo-opacity: 0; --moon-fade: .78;
+  }
+  100% {
+    --moon-size: 132px; --moon-lit: #ffd9a8; --moon-shade: #d19464;
+    --moon-glow: rgba(255, 159, 94, .75);
+    --moon-glow-scale: 4; --moon-glow-opacity: .6;
+    --moon-halo-opacity: 0; --moon-fade: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .moon, .moon--cycle { transition: none; animation: none; }
+}

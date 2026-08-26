@@ -16,13 +16,13 @@ export default async function Icon() {
     (
       <div
         style={{
-          background: '#140f16',
+          background: '#f3f1ec',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#f0e8ef',
+          color: '#294f63',
           fontSize: 22,
           fontFamily: 'Times New Roman',
           fontWeight: 400,

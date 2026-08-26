@@ -46,3 +46,7 @@ npm lint
 - Resume link in `app/page.tsx:10` expects `/resume.pdf` in the `public/` folder
 - Site metadata (title, description) is in `app/layout.tsx:4-7`
 - Personal name is hardcoded in `app/page.tsx:7` and `app/layout.tsx:5`
+
+### Later
+
+- Drive the rest of the page light/dark from the hero sun/moon cycle. At night, use street lamps to light the text.
