@@ -1,6 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import RotatingWord from "./RotatingWord";
+import SkyCycle from "./SkyCycle";
 // import TechCarousel from "./TechCarousel";
 // import MiniCrossword from "./MiniCrossword";
 
@@ -11,6 +12,11 @@ export default function Home() {
       <nav className={styles.nav}>
         <ul className={styles.navLinks}>
           <li>
+            <a href="#about" className={styles.navLink}>
+              About
+            </a>
+          </li>
+          <li>
             <a href="#projects" className={styles.navLink}>
               Projects
             </a>
@@ -18,11 +24,6 @@ export default function Home() {
           <li>
             <a href="#research" className={styles.navLink}>
               Research
-            </a>
-          </li>
-          <li>
-            <a href="#about" className={styles.navLink}>
-              About
             </a>
           </li>
           {/* TODO later: Mini
@@ -36,9 +37,11 @@ export default function Home() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className={styles.hero}>
+      <section className={styles.hero} aria-labelledby="hero-title">
+        <SkyCycle />
         <div className={styles.heroContent}>
-          <h1 className={styles.headline}>
+          <p className={styles.heroEyebrow}>Creative engineering</p>
+          <h1 id="hero-title" className={styles.headline}>
             Software can be <RotatingWord />
           </h1>
           <p className={styles.name}>Henry Burke</p>
@@ -90,6 +93,71 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── About ── */}
+      <section id="about" className={`${styles.section} ${styles.aboutSection}`}>
+        <div className={styles.sectionHeading}>
+          <p className={styles.sectionLabel}>Profile</p>
+          <h2 className={styles.sectionTitle}>About me</h2>
+        </div>
+        <div className={styles.aboutLayout}>
+          <div className={styles.aboutPhotoFrame}>
+            <Image
+              src="/profile.jpg"
+              alt="Henry Burke"
+              width={360}
+              height={450}
+              sizes="(max-width: 768px) 72vw, 360px"
+              className={styles.aboutPhoto}
+            />
+          </div>
+          <div className={styles.aboutCopy}>
+            <p className={styles.aboutLead}>
+              I build thoughtful software that makes complex ideas feel
+              simple.
+            </p>
+            <div className={styles.aboutBody}>
+              <p>
+                I’m Henry, a software engineer who likes building small,
+                finished things — tools for games I actually play, puzzles I
+                wished existed, and, along the way, research on how large
+                language models make sense of source code.
+              </p>
+              <p>
+                The throughline is care: type-checked puzzle grids, vision
+                models that squint at game screenshots, and interfaces that
+                respect people’s attention. Most of what I make starts as
+                something I wanted for myself and ships once a stranger could
+                enjoy it too.
+              </p>
+            </div>
+            <div className={styles.contactRow} aria-label="Contact links">
+              <a
+                href="mailto:hqbcodes@gmail.com"
+                className={styles.contactLink}
+              >
+                Email
+              </a>
+              <a
+                href="https://github.com/Pigf00d"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
+              <a
+                href="https://linkedin.com/in/hqburke"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.contactLink}
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Tech Carousel ── */}
       {/* <TechCarousel /> */}
 
@@ -104,9 +172,12 @@ export default function Home() {
             rel="noopener noreferrer"
             className={styles.projectCard}
           >
-            <img
+            <Image
               src="/burntbase.png"
               alt="Burntbase — Instantly scan bases for 3-star attacks"
+              width={800}
+              height={400}
+              sizes="(max-width: 700px) 100vw, 50vw"
               className={styles.projectImage}
             />
             <h3 className={styles.projectName}>Burntbase</h3>
@@ -129,9 +200,12 @@ export default function Home() {
             rel="noopener noreferrer"
             className={styles.projectCard}
           >
-            <img
+            <Image
               src="/crossword.png"
               alt="Crossword — The Mini daily crossword"
+              width={800}
+              height={400}
+              sizes="(max-width: 700px) 100vw, 50vw"
               className={styles.projectImage}
             />
             <h3 className={styles.projectName}>Crossword</h3>
@@ -205,62 +279,6 @@ export default function Home() {
         <MiniCrossword />
       </section>
       */}
-
-      {/* ── About ── */}
-      <section id="about" className={styles.section}>
-        <p className={styles.sectionLabel}>About</p>
-        <h2 className={styles.sectionTitle}>Hello</h2>
-        <div className={styles.aboutLayout}>
-          <Image
-            src="/profile.jpg"
-            alt="Henry Burke"
-            width={320}
-            height={320}
-            className={styles.aboutPhoto}
-          />
-          <div className={styles.aboutCopy}>
-            <div className={styles.aboutBody}>
-              <p>
-                I’m Henry, a software engineer who likes building small, finished
-                things — tools for games I actually play, puzzles I wished
-                existed, and, along the way, a research paper on how large
-                language models make sense of source code.
-              </p>
-              <p>
-                The throughline is care: type-checked puzzle grids, vision models
-                that squint at game screenshots, interfaces that don’t waste your
-                attention. Most of what I make starts as something I wanted for
-                myself and ships once a stranger could enjoy it too. If you’re
-                building something in that spirit, I’d love to hear about it.
-              </p>
-            </div>
-            <div className={styles.contactRow}>
-              <a href="mailto:hqbcodes@gmail.com" className={styles.contactLink}>
-                Email
-              </a>
-              <a
-                href="https://github.com/Pigf00d"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.contactLink}
-              >
-                GitHub ↗
-              </a>
-              <a
-                href="https://linkedin.com/in/hqburke"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.contactLink}
-              >
-                LinkedIn ↗
-              </a>
-              <a href="/resume.pdf" className={styles.contactLink}>
-                Résumé
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>
