@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { Cormorant_Garamond, Outfit } from 'next/font/google'
 import './globals.css'
+import DaylightProvider from './DaylightProvider'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -33,7 +34,7 @@ export default function RootLayout({
       className={`${cormorant.variable} ${outfit.variable}`}
     >
       <body>
-        {children}
+        <DaylightProvider>{children}</DaylightProvider>
         <Analytics />
       </body>
     </html>

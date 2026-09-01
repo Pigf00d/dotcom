@@ -1,7 +1,4 @@
 .scene {
-  --cycle-duration: 60s;
-  --orbit-radius: min(68vw, 54vh);
-  --orbit-pivot-y: 76%;
   position: absolute;
   inset: 0;
   overflow: hidden;
@@ -22,44 +19,44 @@
   overflow: hidden;
 }
 
+/* ── Sky palettes ───────────────────────────────────────────────────────────
+   Stacked bottom-to-top: day is the opaque base, the other three are composited
+   over it at alphas solved in daylight.ts so the result is an exact weighted
+   blend of all four rather than an approximate crossfade. */
 .skyLayer {
-  opacity: 0;
   will-change: opacity;
-  animation-duration: var(--cycle-duration);
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-.dawn {
-  background:
-    radial-gradient(circle at 18% 78%, rgba(255, 208, 148, 0.86), transparent 32%),
-    linear-gradient(180deg, #17213b 0%, #5b6685 45%, #d6927f 76%, #f2bb83 100%);
-  animation-name: dawnCycle;
 }
 
 .day {
+  opacity: 1;
   background:
     radial-gradient(circle at 62% 5%, rgba(255, 255, 255, 0.36), transparent 28%),
     linear-gradient(180deg, #3475a9 0%, #78b7d6 55%, #d4e2df 100%);
-  animation-name: dayCycle;
+}
+
+.dawn {
+  opacity: var(--sky-dawn-a, 0);
+  background:
+    radial-gradient(circle at 18% 78%, rgba(255, 208, 148, 0.86), transparent 32%),
+    linear-gradient(180deg, #17213b 0%, #5b6685 45%, #d6927f 76%, #f2bb83 100%);
 }
 
 .sunset {
+  opacity: var(--sky-dusk-a, 0);
   background:
     radial-gradient(circle at 78% 76%, rgba(255, 193, 108, 0.72), transparent 34%),
     linear-gradient(180deg, #243a67 0%, #915c77 47%, #d77b64 72%, #efb271 100%);
-  animation-name: sunsetCycle;
 }
 
 .night {
+  opacity: var(--sky-night-a, 0);
   background:
     radial-gradient(circle at 66% 12%, rgba(96, 113, 169, 0.2), transparent 30%),
     linear-gradient(180deg, #070b18 0%, #101a32 58%, #273551 100%);
-  animation-name: nightCycle;
 }
 
 .stars {
-  opacity: 0;
+  opacity: var(--star-opacity, 0);
   background-image:
     radial-gradient(circle, rgba(255, 255, 255, 0.92) 0 1px, transparent 1.6px),
     radial-gradient(circle, rgba(216, 227, 255, 0.8) 0 1px, transparent 1.5px),
@@ -72,90 +69,54 @@
     122px 116px,
     173px 151px,
     89px 97px;
-  animation: starsCycle var(--cycle-duration) linear infinite;
   will-change: opacity;
 }
 
+/* ── Sun and moon ───────────────────────────────────────────────────────────
+   Placed on the arc by the shared clock. The art inside simply fills its box,
+   so swapping in different artwork changes nothing here. */
 .sunTrack,
 .moonTrack {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: clamp(4.5rem, 8vw, 7rem);
+  left: calc(var(--sun-x, 50) * 1%);
+  top: calc(var(--sun-y, 20) * 1%);
+  transform: translate(-50%, -50%);
   aspect-ratio: 1;
-  offset-path: circle(var(--orbit-radius) at 50% var(--orbit-pivot-y));
-  offset-anchor: center;
-  offset-rotate: 0deg;
-  animation: celestialOrbit var(--cycle-duration) linear infinite;
+  will-change: left, top, opacity;
 }
 
 .sunTrack {
-  animation-delay: calc(var(--cycle-duration) * -0.5);
+  width: clamp(8rem, 15vw, 13rem);
+  opacity: var(--sun-opacity, 1);
 }
 
 .moonTrack {
-  width: clamp(3.5rem, 6vw, 5.5rem);
+  left: calc(var(--moon-x, 50) * 1%);
+  top: calc(var(--moon-y, 20) * 1%);
+  width: clamp(6.5rem, 11vw, 10rem);
+  opacity: var(--moon-opacity, 0);
 }
 
-.sun,
-.moon {
+.sunTrack > svg,
+.moonTrack > svg {
   display: block;
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  overflow: visible;
 }
 
-.sun {
-  background: #ffe8ad;
-  box-shadow:
-    0 0 1.5rem rgba(255, 223, 153, 0.7),
-    0 0 5rem rgba(255, 173, 91, 0.46);
-}
-
-.moon {
-  position: relative;
-  overflow: hidden;
-  background: #e9edf1;
-  box-shadow:
-    inset -0.8rem -0.45rem 0 #c9d1dc,
-    0 0 2.5rem rgba(209, 221, 242, 0.34);
-}
-
-.moon > span {
-  position: absolute;
-  display: block;
-  border-radius: 50%;
-  background: rgba(147, 160, 176, 0.34);
-}
-
-.craterOne {
-  top: 20%;
-  left: 22%;
-  width: 24%;
-  height: 24%;
-}
-
-.craterTwo {
-  right: 18%;
-  bottom: 22%;
-  width: 18%;
-  height: 18%;
-}
-
-.craterThree {
-  left: 39%;
-  bottom: 13%;
-  width: 10%;
-  height: 10%;
-}
-
+/* ── Clouds ─────────────────────────────────────────────────────────────────
+   Weather keeps its own timeline; only the tint follows the sun. */
 .cloudLayer {
   position: absolute;
   width: clamp(12rem, 24vw, 24rem);
-  opacity: 0;
-  color: rgba(247, 249, 249, 0.68);
-  will-change: transform, opacity;
-  animation-duration: var(--cycle-duration);
+  opacity: calc(0.16 + var(--daylight, 1) * 0.58);
+  color: color-mix(
+    in oklab,
+    #ffd2a5 calc(var(--golden, 0) * 55%),
+    rgba(247, 249, 249, 0.72)
+  );
+  will-change: transform;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
 }
@@ -163,39 +124,43 @@
 .cloud {
   display: block;
   width: 100%;
-  fill: currentColor;
 }
 
 .cloudLayerOne {
   top: 15%;
   left: -22rem;
-  animation-name: cloudOne;
+  animation-name: cloudDrift;
+  animation-duration: 96s;
 }
 
 .cloudLayerTwo {
   top: 36%;
   left: -18rem;
   width: clamp(9rem, 18vw, 17rem);
-  color: rgba(241, 236, 232, 0.42);
-  animation-name: cloudTwo;
+  opacity: calc(0.1 + var(--daylight, 1) * 0.38);
+  animation-name: cloudDrift;
+  animation-duration: 148s;
 }
 
 .cloudLayerThree {
   top: 7%;
   left: -20rem;
   width: clamp(8rem, 15vw, 14rem);
-  color: rgba(239, 244, 247, 0.34);
-  animation-name: cloudThree;
+  opacity: calc(0.08 + var(--daylight, 1) * 0.3);
+  animation-name: cloudDrift;
+  animation-duration: 124s;
+  animation-delay: -40s;
 }
 
 .haze {
   top: auto;
   height: 42%;
-  background: linear-gradient(180deg, transparent, rgba(255, 205, 159, 0.14));
-  animation: hazeCycle var(--cycle-duration) linear infinite;
+  opacity: var(--haze-opacity, 0.1);
+  background: linear-gradient(180deg, transparent, rgba(255, 205, 159, 0.34));
   will-change: opacity;
 }
 
+/* ── Ground ─────────────────────────────────────────────────────────────── */
 .horizon {
   display: block;
   position: absolute;
@@ -207,11 +172,40 @@
 }
 
 .horizonBack {
-  fill: #192230;
+  fill: color-mix(in oklab, #0a1018 calc(var(--nightness, 0) * 100%), #1f2b3a);
 }
 
 .horizonFront {
-  fill: #0b111b;
+  fill: color-mix(in oklab, #04070c calc(var(--nightness, 0) * 100%), #0d141f);
+}
+
+/* ── Lamps on the ridge ─────────────────────────────────────────────────── */
+.heroLamp {
+  position: absolute;
+  bottom: clamp(3.5rem, 9vh, 6rem);
+  width: clamp(2.4rem, 4vw, 3.4rem);
+}
+
+.heroLampLeft {
+  left: 7%;
+}
+
+.heroLampRight {
+  right: 9%;
+  transform: scaleX(-1);
+}
+
+.heroLampArt {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  color: color-mix(in oklab, #04070c calc(var(--nightness, 0) * 100%), #0d141f);
+}
+
+.heroLampArt :global(.lampLens),
+.heroLampArt :global(.lampBloom) {
+  opacity: var(--lamp, 0);
 }
 
 .contrastVeil {
@@ -220,152 +214,16 @@
     linear-gradient(180deg, rgba(4, 8, 14, 0.16), rgba(4, 8, 14, 0.26));
 }
 
-.paused .artwork *,
-.paused .artwork *::before,
-.paused .artwork *::after {
-  animation-play-state: paused !important;
+.paused .cloudLayer {
+  animation-play-state: paused;
 }
 
-@keyframes dawnCycle {
-  0%,
-  10% {
-    opacity: 1;
-  }
-  25%,
-  88% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes dayCycle {
-  0%,
-  14% {
-    opacity: 0;
-  }
-  28%,
-  44% {
-    opacity: 1;
-  }
-  59%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes sunsetCycle {
-  0%,
-  42% {
-    opacity: 0;
-  }
-  58%,
-  68% {
-    opacity: 1;
-  }
-  80%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes nightCycle {
-  0%,
-  63% {
-    opacity: 0;
-  }
-  80%,
-  91% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes starsCycle {
-  0%,
-  65% {
-    opacity: 0;
-  }
-  80%,
-  92% {
-    opacity: 0.82;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes celestialOrbit {
+@keyframes cloudDrift {
   from {
-    offset-distance: 0%;
+    transform: translateX(0);
   }
   to {
-    offset-distance: 100%;
-  }
-}
-
-@keyframes cloudOne {
-  0% {
-    opacity: 0.12;
-    transform: translateX(0);
-  }
-  30% {
-    opacity: 0.68;
-  }
-  72% {
-    opacity: 0.3;
-  }
-  100% {
-    opacity: 0.1;
     transform: translateX(calc(100vw + 44rem));
-  }
-}
-
-@keyframes cloudTwo {
-  0% {
-    opacity: 0.14;
-    transform: translateX(0);
-  }
-  45% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0.12;
-    transform: translateX(calc(100vw + 38rem));
-  }
-}
-
-@keyframes cloudThree {
-  0% {
-    opacity: 0.08;
-    transform: translateX(0);
-  }
-  55% {
-    opacity: 0.36;
-  }
-  100% {
-    opacity: 0.08;
-    transform: translateX(calc(100vw + 40rem));
-  }
-}
-
-@keyframes hazeCycle {
-  0%,
-  10% {
-    opacity: 0.7;
-  }
-  32% {
-    opacity: 0.14;
-  }
-  60% {
-    opacity: 0.86;
-  }
-  82%,
-  100% {
-    opacity: 0.08;
   }
 }
 
@@ -373,34 +231,30 @@
   .horizon {
     height: 9rem;
   }
+
+  .heroLampLeft {
+    left: 4%;
+  }
+
+  .heroLampRight {
+    right: 5%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dawn,
-  .day,
-  .night,
-  .sunTrack,
-  .stars,
   .cloudLayer {
-    opacity: 0;
     animation: none;
   }
 
-  .sunset {
-    opacity: 1;
-    animation: none;
+  .cloudLayerOne {
+    transform: translateX(48vw);
   }
 
-  .moonTrack {
-    offset-path: none;
-    animation: none;
-    top: 22%;
-    left: 28%;
-    opacity: 1;
+  .cloudLayerTwo {
+    transform: translateX(72vw);
   }
 
-  .haze {
-    opacity: 0.65;
-    animation: none;
+  .cloudLayerThree {
+    transform: translateX(30vw);
   }
 }
