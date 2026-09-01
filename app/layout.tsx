@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import { Cormorant_Garamond, Outfit } from 'next/font/google'
 import './globals.css'
 
@@ -31,7 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${outfit.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
