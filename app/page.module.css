@@ -20,7 +20,9 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 960px;
+  width: min(100%, 68rem);
+  container-type: inline-size;
+  container-name: hero-copy;
 }
 
 .visuallyHidden {
@@ -37,12 +39,15 @@
 
 .headline {
   font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  /* Sized so "Software can be intentional." stays on one line. */
+  font-size: clamp(1.15rem, 5.2vw, 5rem);
+  font-size: clamp(1.15rem, 6.55cqi, 5rem);
   font-weight: 400;
   color: var(--hero-text);
   letter-spacing: 0.025em;
   line-height: 1.08;
   text-shadow: 0 2px 24px rgba(2, 7, 14, 0.38);
+  white-space: nowrap;
 }
 
 .rotatingWord {
