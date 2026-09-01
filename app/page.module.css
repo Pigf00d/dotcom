@@ -209,9 +209,21 @@
 
 /* ── Sections (shared) ── */
 .section {
+  position: relative;
+  /* Confines the streetlamp's screen-blended light to this section. */
+  isolation: isolate;
   max-width: 1120px;
   margin: 0 auto;
   padding: 7rem clamp(1.25rem, 4vw, 3rem);
+}
+
+/* Wide enough for a gutter: open one up and stand a lamp in it. The text column
+   keeps its previous measure — only the whole block shifts right. */
+@media (min-width: 1080px) {
+  .section {
+    max-width: calc(1120px + 4.5rem);
+    padding-left: 7.5rem;
+  }
 }
 
 .sectionHeading {
@@ -264,6 +276,13 @@
   aspect-ratio: 2 / 1;
   object-fit: cover;
   background: var(--surface-sunken);
+  /* Without this, screenshots stay lit like windows once the page goes dark. */
+  filter: var(--image-filter);
+  transition: filter 0.35s ease;
+}
+
+.projectCard:hover .projectImage {
+  filter: brightness(calc(1 - var(--dark-t) * 0.08));
 }
 
 .projectCard:hover {
@@ -447,6 +466,7 @@
   object-position: 50% 42%;
   border: 1px solid var(--border-subtle);
   box-shadow: var(--shadow-card);
+  filter: var(--image-filter);
 }
 
 .aboutCopy {

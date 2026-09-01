@@ -47,6 +47,29 @@ npm lint
 - Site metadata (title, description) is in `app/layout.tsx:4-7`
 - Personal name is hardcoded in `app/page.tsx:7` and `app/layout.tsx:5`
 
+### Daylight cycle
+
+The whole page is driven by one clock. `app/daylight.ts` turns a single `phase`
+(0 -> 1 over `CYCLE_SECONDS`) into every derived value; `app/DaylightProvider.tsx`
+runs that clock and publishes the results as CSS custom properties on `<html>`.
+Nothing else may keep its own time base.
+
+- `--dark-t` drives the page palette in `globals.css`. It is intentionally not
+  linear in time: ink and background cross in about a second so they never sit
+  at a mid-tone together, and `--ink-halo` carries legibility through the
+  crossing. Changing that curve means re-checking contrast.
+- `--lamp` lights the streetlamps (`app/Streetlamp.tsx`), which stand in each
+  section's gutter above 1080px and on the hero horizon.
+- `--image-filter` re-exposes photographs so they don't glare at night.
+- Append `?daylight=debug` for a scrubber to drag through the cycle.
+
 ### Later
 
-- Drive the rest of the page light/dark from the hero sun/moon cycle. At night, use street lamps to light the text.
+- Replace the placeholder artwork with real art. Everything drawable lives in
+  `app/sky/` (`Sun`, `Moon`, `Cloud`, `Lamp`) and is positioned entirely by its
+  caller, so each file can be swapped without touching the motion or lighting.
+- The streetlamp lighting needs another pass. The cone is the only light source
+  now (a second rectangular glow was removed because its box edges showed), so
+  it is doing all the work alone: the falloff where it ends is still a little
+  readable as a shape, and the light does not yet wrap the text the way a real
+  lamp would. Worth revisiting once the lamp artwork is final.

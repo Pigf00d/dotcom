@@ -1,0 +1,63 @@
+.mount {
+  position: absolute;
+  left: clamp(0.5rem, 2vw, 1.5rem);
+  top: 4.5rem;
+  width: 5rem;
+  pointer-events: none;
+  /* Hidden until there is a gutter wide enough to stand it in. */
+  display: none;
+}
+
+.lamp {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  /* The post is a silhouette: near-black by day, and it never fully disappears
+     at night because the bloom behind it keeps an edge. */
+  color: color-mix(
+    in oklab,
+    #2b3444 calc(var(--dark-t, 0) * 100%),
+    #3d4655
+  );
+}
+
+.lamp :global(.lampLens),
+.lamp :global(.lampBloom) {
+  opacity: var(--lamp, 0);
+}
+
+/* The cone falling from the bulb — the only light source. It spreads wide
+   enough that its far edge washes across the text beside the lamp, so the
+   illumination comes from the cone itself rather than from a separate glow. */
+.cone {
+  position: absolute;
+  top: 3.2rem;
+  left: -6rem;
+  width: 28rem;
+  height: 27rem;
+  /* Apex sits under the lantern; the base opens out across the section. */
+  clip-path: polygon(30.5% 0, 37% 0, 100% 100%, 0 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 206, 138, calc(var(--lamp, 0) * 0.2)),
+    rgba(255, 199, 125, calc(var(--lamp, 0) * 0.05)) 58%,
+    rgba(255, 196, 120, 0) 88%
+  );
+  /* The blur has to be wider than the clip edge, or the polygon reads as a
+     trapezoid with a drawn edge instead of as light falling through air. */
+  filter: blur(30px);
+  mix-blend-mode: screen;
+}
+
+@media (min-width: 1080px) {
+  .mount {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cone {
+    filter: none;
+  }
+}
