@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import RotatingWord from "./RotatingWord";
 import SkyCycle from "./SkyCycle";
+import Streetlamp from "./Streetlamp";
 // import TechCarousel from "./TechCarousel";
 // import MiniCrossword from "./MiniCrossword";
 
@@ -66,6 +67,7 @@ export default function Home() {
 
       {/* ── About ── */}
       <section id="about" className={`${styles.section} ${styles.aboutSection}`}>
+        <Streetlamp />
         <div className={styles.sectionHeading}>
           <p className={styles.sectionLabel}>Profile</p>
           <h2 className={styles.sectionTitle}>About me</h2>
@@ -133,6 +135,7 @@ export default function Home() {
 
       {/* ── Projects ── */}
       <section id="projects" className={styles.section}>
+        <Streetlamp />
         <p className={styles.sectionLabel}>Work</p>
         <h2 className={styles.sectionTitle}>Projects</h2>
         <div className={styles.projectGrid}>
@@ -195,6 +198,7 @@ export default function Home() {
 
       {/* ── Research ── */}
       <section id="research" className={styles.section}>
+        <Streetlamp />
         <p className={styles.sectionLabel}>Writing</p>
         <h2 className={styles.sectionTitle}>Research</h2>
         <div className={styles.paperList}>

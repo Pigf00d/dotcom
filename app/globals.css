@@ -1,15 +1,124 @@
 :root {
-  --surface-page: #f3f1ec;
-  --surface-raised: #fbfaf7;
-  --surface-sunken: #e8e5de;
-  --text-primary: #171c23;
-  --text-secondary: #414a54;
-  --text-muted: #68737d;
-  --accent: #3f6f86;
-  --accent-strong: #294f63;
-  --border-subtle: rgba(23, 28, 35, 0.1);
-  --border-strong: rgba(23, 28, 35, 0.2);
-  --shadow-card: 0 20px 55px rgba(34, 43, 51, 0.12);
+  /* ── Published by DaylightProvider ──────────────────────────────────────
+     These are the defaults used for the server-rendered first paint (a bright
+     mid-morning) and are overwritten as inline styles on <html> once the clock
+     starts. Never set them from a stylesheet. */
+  --daylight: 1;
+  --nightness: 0;
+  --golden: 0.1;
+  --dark-t: 0;
+  --lamp: 0;
+  --ink-halo: 0;
+
+  /* ── Palette endpoints ──────────────────────────────────────────────────
+     Two complete palettes. Every token below is the same colour role sampled
+     somewhere between them, and they are all driven by the *same* `--dark-t`,
+     which is deliberately not a linear function of time: it crosses in about two
+     seconds so ink and background never sit at a mid-tone together. */
+  --day-surface-page: #f3f1ec;
+  --day-surface-raised: #fbfaf7;
+  --day-surface-sunken: #e8e5de;
+  --day-text-primary: #171c23;
+  --day-text-secondary: #414a54;
+  --day-text-muted: #5f6a75;
+  --day-accent: #3f6f86;
+  --day-accent-strong: #294f63;
+  --day-border-subtle: rgba(23, 28, 35, 0.1);
+  --day-border-strong: rgba(23, 28, 35, 0.2);
+  --day-shadow: rgba(34, 43, 51, 0.12);
+
+  --night-surface-page: #0b0f17;
+  --night-surface-raised: #151b26;
+  --night-surface-sunken: #080c12;
+  --night-text-primary: #eef1f6;
+  --night-text-secondary: #b6bfcc;
+  --night-text-muted: #808b9b;
+  --night-accent: #8fc4dc;
+  --night-accent-strong: #badff0;
+  --night-border-subtle: rgba(226, 235, 245, 0.13);
+  --night-border-strong: rgba(226, 235, 245, 0.24);
+  --night-shadow: rgba(0, 0, 0, 0.55);
+
+  /* Low sun and sodium lamps both push everything warm. */
+  --warm-sun: #ffd9a8;
+  --warm-lamp: #ffc77c;
+  --surface-warmth: calc((var(--golden) * 9 + var(--lamp) * 5) * 1%);
+
+  /* ── Resolved tokens ─────────────────────────────────────────────────── */
+  --surface-page: color-mix(
+    in oklab,
+    var(--warm-sun) var(--surface-warmth),
+    color-mix(
+      in oklab,
+      var(--night-surface-page) calc(var(--dark-t) * 100%),
+      var(--day-surface-page)
+    )
+  );
+  --surface-raised: color-mix(
+    in oklab,
+    var(--warm-sun) var(--surface-warmth),
+    color-mix(
+      in oklab,
+      var(--night-surface-raised) calc(var(--dark-t) * 100%),
+      var(--day-surface-raised)
+    )
+  );
+  --surface-sunken: color-mix(
+    in oklab,
+    var(--night-surface-sunken) calc(var(--dark-t) * 100%),
+    var(--day-surface-sunken)
+  );
+
+  /* Text takes no warm tint — contrast is the only thing it optimises for. */
+  --text-primary: color-mix(
+    in oklab,
+    var(--night-text-primary) calc(var(--dark-t) * 100%),
+    var(--day-text-primary)
+  );
+  --text-secondary: color-mix(
+    in oklab,
+    var(--night-text-secondary) calc(var(--dark-t) * 100%),
+    var(--day-text-secondary)
+  );
+  --text-muted: color-mix(
+    in oklab,
+    var(--night-text-muted) calc(var(--dark-t) * 100%),
+    var(--day-text-muted)
+  );
+  --accent: color-mix(
+    in oklab,
+    var(--night-accent) calc(var(--dark-t) * 100%),
+    var(--day-accent)
+  );
+  --accent-strong: color-mix(
+    in oklab,
+    var(--night-accent-strong) calc(var(--dark-t) * 100%),
+    var(--day-accent-strong)
+  );
+  --border-subtle: color-mix(
+    in oklab,
+    var(--night-border-subtle) calc(var(--dark-t) * 100%),
+    var(--day-border-subtle)
+  );
+  --border-strong: color-mix(
+    in oklab,
+    var(--night-border-strong) calc(var(--dark-t) * 100%),
+    var(--day-border-strong)
+  );
+  --shadow-color: color-mix(
+    in oklab,
+    var(--night-shadow) calc(var(--dark-t) * 100%),
+    var(--day-shadow)
+  );
+  --shadow-card: 0 20px 55px var(--shadow-color);
+
+  /* Exposure correction for photographs, so they don't glare like lit windows
+     once the page around them goes dark. */
+  --image-filter: brightness(calc(1 - var(--dark-t) * 0.32))
+    contrast(calc(1 - var(--dark-t) * 0.05))
+    saturate(calc(1 - var(--dark-t) * 0.2))
+    sepia(calc(var(--lamp) * 0.14));
+
   --hero-text: #fffdf7;
   --hero-muted: rgba(255, 253, 247, 0.8);
   --hero-accent: #ffe0a6;
@@ -19,6 +128,10 @@
   --cell-wrong: #a84f3d;
   --cell-solved-num: rgba(243, 241, 236, 0.56);
   color-scheme: light;
+}
+
+:root[data-phase='night'] {
+  color-scheme: dark;
 }
 
 * {
@@ -46,6 +159,12 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   position: relative;
+  /* Inherited by every section: carries legibility through the ~0.3s at dusk and
+     dawn where ink and background share a luminance. See inkHalo() in
+     daylight.ts. Fully transparent at every other time of day. */
+  text-shadow:
+    0 0 calc(var(--ink-halo) * 0.42em) rgba(8, 11, 17, calc(var(--ink-halo) * 0.6)),
+    0 0 calc(var(--ink-halo) * 0.14em) rgba(8, 11, 17, calc(var(--ink-halo) * 0.75));
 }
 
 a {

@@ -2,25 +2,27 @@
 
 import { useEffect, useRef, useState } from 'react';
 import styles from './SkyCycle.module.css';
+import { useDaylight } from './DaylightProvider';
+import Sun from './sky/Sun';
+import Moon from './sky/Moon';
+import Cloud from './sky/Cloud';
+import Lamp from './sky/Lamp';
 
-// Later: sync page light/dark with this cycle; at night, street lamps illuminate text.
+/**
+ * The hero sky. It owns no clock of its own — every layer's opacity and the
+ * positions of the sun and moon come from the `--sky-*` custom properties that
+ * DaylightProvider publishes on <html>, which is what keeps the rest of the page
+ * in step with it.
+ *
+ * The four sky palettes are stacked and composited "over" one another; the
+ * alphas are pre-solved in daylight.ts so the result is an exact weighted blend.
+ * Cloud drift is the one thing that stays on its own CSS timeline — weather
+ * doesn't track the sun.
+ */
 export default function SkyCycle() {
   const sceneRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(true);
-  const [isDocumentVisible, setIsDocumentVisible] = useState(true);
-  const [reduceMotion, setReduceMotion] = useState(false);
-
-  useEffect(() => {
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const updateMotionPreference = () => setReduceMotion(motionQuery.matches);
-
-    updateMotionPreference();
-    motionQuery.addEventListener('change', updateMotionPreference);
-
-    return () => {
-      motionQuery.removeEventListener('change', updateMotionPreference);
-    };
-  }, []);
+  const { moonPhase, reduceMotion, paused } = useDaylight();
 
   useEffect(() => {
     const scene = sceneRef.current;
@@ -35,70 +37,37 @@ export default function SkyCycle() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const updateVisibility = () => {
-      setIsDocumentVisible(document.visibilityState === 'visible');
-    };
-
-    updateVisibility();
-    document.addEventListener('visibilitychange', updateVisibility);
-    return () => {
-      document.removeEventListener('visibilitychange', updateVisibility);
-    };
-  }, []);
-
-  const isPaused = !isInView || !isDocumentVisible || reduceMotion;
+  const driftPaused = !isInView || paused || reduceMotion;
 
   return (
     <div
       ref={sceneRef}
-      className={`${styles.scene} ${isPaused ? styles.paused : ''}`}
+      className={`${styles.scene} ${driftPaused ? styles.paused : ''}`}
       data-reduced-motion={reduceMotion ? 'true' : 'false'}
     >
       <div className={styles.artwork} aria-hidden="true">
-        <div className={`${styles.skyLayer} ${styles.dawn}`} />
+        {/* Day is the base; the rest are composited over it. */}
         <div className={`${styles.skyLayer} ${styles.day}`} />
+        <div className={`${styles.skyLayer} ${styles.dawn}`} />
         <div className={`${styles.skyLayer} ${styles.sunset}`} />
         <div className={`${styles.skyLayer} ${styles.night}`} />
         <div className={styles.stars} />
 
         <div className={styles.sunTrack}>
-          <span className={styles.sun} />
+          <Sun />
         </div>
         <div className={styles.moonTrack}>
-          <span className={styles.moon}>
-            <span className={styles.craterOne} />
-            <span className={styles.craterTwo} />
-            <span className={styles.craterThree} />
-          </span>
+          <Moon phase={moonPhase} />
         </div>
 
         <div className={`${styles.cloudLayer} ${styles.cloudLayerOne}`}>
-          <svg
-            className={styles.cloud}
-            viewBox="0 0 280 84"
-            focusable="false"
-          >
-            <path d="M18 68c7-17 23-26 42-24 8-24 28-38 53-38 28 0 49 18 55 44 9-9 22-14 36-12 18 2 31 13 36 30H18Z" />
-          </svg>
+          <Cloud variant={0} className={styles.cloud} />
         </div>
         <div className={`${styles.cloudLayer} ${styles.cloudLayerTwo}`}>
-          <svg
-            className={styles.cloud}
-            viewBox="0 0 280 84"
-            focusable="false"
-          >
-            <path d="M25 67c6-15 20-24 37-23 9-19 27-31 48-31 24 0 43 14 51 36 10-11 25-16 40-12 15 3 26 14 30 30H25Z" />
-          </svg>
+          <Cloud variant={1} className={styles.cloud} />
         </div>
         <div className={`${styles.cloudLayer} ${styles.cloudLayerThree}`}>
-          <svg
-            className={styles.cloud}
-            viewBox="0 0 280 84"
-            focusable="false"
-          >
-            <path d="M14 69c8-20 27-31 49-27 10-23 31-37 57-35 25 1 44 17 50 40 11-8 24-10 37-6 15 5 25 14 29 28H14Z" />
-          </svg>
+          <Cloud variant={2} className={styles.cloud} />
         </div>
 
         <div className={styles.haze} />
@@ -124,6 +93,15 @@ export default function SkyCycle() {
             height="28"
           />
         </svg>
+
+        {/* The same lamps that light the sections below, standing on the ridge. */}
+        <div className={`${styles.heroLamp} ${styles.heroLampLeft}`}>
+          <Lamp className={styles.heroLampArt} />
+        </div>
+        <div className={`${styles.heroLamp} ${styles.heroLampRight}`}>
+          <Lamp className={styles.heroLampArt} />
+        </div>
+
         <div className={styles.contrastVeil} />
       </div>
     </div>
