@@ -4,9 +4,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './page.module.css';
 
 const WORDS = ['beautiful', 'art', 'elegant', 'intentional', 'powerful'];
-const LONGEST_WORD = WORDS.reduce((longest, word) =>
-  word.length > longest.length ? word : longest,
-);
 const INTERVAL_MS = 15_000;
 
 export default function RotatingWord() {
@@ -38,25 +35,18 @@ export default function RotatingWord() {
   }, [reduceMotion]);
 
   useLayoutEffect(() => {
-    const update = () => {
-      const maxWidth = itemRefs.current.reduce((widest, el) => {
-        if (!el) return widest;
-        return Math.max(widest, el.getBoundingClientRect().width);
-      }, 0);
+    const el = itemRefs.current[index];
+    if (!el) return;
 
-      if (maxWidth > 0) setWidth(Math.ceil(maxWidth));
-    };
-
+    const update = () => setWidth(Math.ceil(el.getBoundingClientRect().width));
     update();
 
     const observer = new ResizeObserver(update);
-    for (const el of itemRefs.current) {
-      if (el) observer.observe(el);
-    }
+    observer.observe(el);
     void document.fonts?.ready.then(update);
 
     return () => observer.disconnect();
-  }, []);
+  }, [index]);
 
   return (
     <>
@@ -66,7 +56,7 @@ export default function RotatingWord() {
         aria-hidden="true"
         style={width != null ? { width } : undefined}
       >
-        <span className={styles.rotatingWordSizer}>{LONGEST_WORD}.</span>
+        <span className={styles.rotatingWordSizer}>{WORDS[index]}.</span>
         <span className={styles.rotatingWordViewport}>
           <span
             className={styles.rotatingWordTrack}
