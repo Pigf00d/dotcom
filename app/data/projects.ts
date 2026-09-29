@@ -3,7 +3,7 @@ import burntbaseShot from '@/public/burntbase.png'
 
 export type ProjectMedia =
   | { kind: 'image'; src: StaticImageData; alt: string }
-  | { kind: 'placeholder'; label: string; path: string; alt: string }
+  | { kind: 'placeholder'; label: string; path?: string; alt: string }
 
 export type Project = {
   /** Shown as `./<path>` in the listing line. */
@@ -46,27 +46,27 @@ export const projects: Project[] = [
     tags: ['agents', 'evals', 'benchmarks'],
     media: {
       kind: 'placeholder',
-      label: '[ SCREENSHOT ]',
-      path: 'img/urinalbench.png',
-      alt: 'UrinalBench image placeholder',
+      label: '[ COMING SOON ]',
+      alt: 'UrinalBench screenshot coming soon',
     },
   },
-  {
-    path: 'homelab',
-    type: 'dir',
-    when: 'ongoing',
-    title: 'Home Lab',
-    stat: { value: 'self-hosted', caption: 'local AI agents on a Mac mini' },
-    description:
-      'My Mac mini runs as a home server for local AI agents. Each one lives in a Docker sandbox under its own macOS user, with Ollama as the model backend.',
-    tags: ['docker', 'ollama', 'macos'],
-    media: {
-      kind: 'placeholder',
-      label: '[ PHOTO ]',
-      path: 'img/homelab.jpg',
-      alt: 'Home lab photo placeholder',
-    },
-  },
+  // Home Lab is parked for now; uncomment to bring the card back.
+  // {
+  //   path: 'homelab',
+  //   type: 'dir',
+  //   when: 'ongoing',
+  //   title: 'Home Lab',
+  //   stat: { value: 'self-hosted', caption: 'local AI agents on a Mac mini' },
+  //   description:
+  //     'My Mac mini runs as a home server for local AI agents. Each one lives in a Docker sandbox under its own macOS user, with Ollama as the model backend.',
+  //   tags: ['docker', 'ollama', 'macos'],
+  //   media: {
+  //     kind: 'placeholder',
+  //     label: '[ PHOTO ]',
+  //     path: 'img/homelab.jpg',
+  //     alt: 'Home lab photo placeholder',
+  //   },
+  // },
   {
     path: 'icsme-paper.pdf',
     type: 'file',

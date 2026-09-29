@@ -21,7 +21,7 @@ export default function BlogList() {
         //   </a>
         // }
       />
-      <ComingSoon label="COMING SOON" />
+      <ComingSoon />
       {/*
       <ul className={styles.list}>
         {newestFirst.map((post, i) => (

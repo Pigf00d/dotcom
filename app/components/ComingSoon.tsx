@@ -1,14 +1,10 @@
 import styles from './ComingSoon.module.css'
 
-type ComingSoonProps = {
-  label: string
-}
-
 /** A dashed stand-in for a section whose content isn't ready yet. */
-export default function ComingSoon({ label }: ComingSoonProps) {
+export default function ComingSoon() {
   return (
     <div className={styles.box}>
-      <span className={styles.label}>[ {label} ]</span>
+      <span className={styles.label}>[ COMING SOON ]</span>
     </div>
   )
 }

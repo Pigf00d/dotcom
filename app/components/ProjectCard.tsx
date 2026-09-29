@@ -35,7 +35,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       ) : (
         <div role="img" aria-label={media.alt} className={styles.placeholder}>
           <span className={styles.placeholderLabel}>{media.label}</span>
-          <span>{media.path}</span>
+          {media.path && <span>{media.path}</span>}
         </div>
       )}
 

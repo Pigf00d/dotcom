@@ -41,7 +41,7 @@ export default function OffHours() {
         command="neofetch --off-hours"
         title="Outside of Work"
       />
-      <ComingSoon label="TBD" />
+      <ComingSoon />
       {/*
       <div className={styles.fetch}>
         <pre className={styles.art} aria-hidden="true">
