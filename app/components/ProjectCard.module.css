@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -97,7 +98,40 @@
 }
 
 .link {
+  /* Sit above a linked card's stretched title link. */
+  position: relative;
+  z-index: 1;
   color: var(--fg);
+}
+
+/* A card with an href: the title link stretches over the whole card, and the
+   card lights its border instead of the usual inverted-link hover. */
+.cardLink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.cardLink:hover {
+  background: none;
+  color: inherit;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+}
+
+.linked {
+  transition: border-color 120ms ease;
+}
+
+.linked:hover {
+  border-color: var(--fg);
+}
+
+.linked:has(.cardLink:focus-visible) {
+  outline: 1px solid var(--fg);
+  outline-offset: 2px;
 }
 
 @media (max-width: 720px) {

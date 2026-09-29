@@ -14,7 +14,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   const number = String(index + 1).padStart(2, '0')
 
   return (
-    <article className={styles.card}>
+    <article
+      className={project.href ? `${styles.card} ${styles.linked}` : styles.card}
+    >
       <div className={styles.meta}>
         <span>
           {modes[project.type]} {number} ./{project.path}
@@ -39,11 +41,26 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
       )}
 
-      <h3 className={styles.title}>{project.title}</h3>
-      <div className={styles.stat}>
-        <span className={styles.statValue}>{project.stat.value}</span>
-        <span className={styles.statCaption}>{project.stat.caption}</span>
-      </div>
+      <h3 className={styles.title}>
+        {project.href ? (
+          <a
+            href={project.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.cardLink}
+          >
+            {project.title}
+          </a>
+        ) : (
+          project.title
+        )}
+      </h3>
+      {project.stat && (
+        <div className={styles.stat}>
+          <span className={styles.statValue}>{project.stat.value}</span>
+          <span className={styles.statCaption}>{project.stat.caption}</span>
+        </div>
+      )}
       <p className={styles.description}>{project.description}</p>
 
       <div className={styles.tags}>

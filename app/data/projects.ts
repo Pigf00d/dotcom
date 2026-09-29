@@ -12,7 +12,9 @@ export type Project = {
   type: 'dir' | 'file'
   when: string
   title: string
-  stat: { value: string; caption: string }
+  /** Opens when anywhere on the card is clicked. */
+  href?: string
+  stat?: { value: string; caption: string }
   description: string
   tags: string[]
   link?: { label: string; href: string }
@@ -25,7 +27,7 @@ export const projects: Project[] = [
     type: 'dir',
     when: '2025 → now',
     title: 'BurntBase',
-    stat: { value: '86,000+', caption: 'users on iOS, Android, web, and Discord' },
+    href: 'https://burntbase.com',
     description:
       'A Clash of Clans base analyzer I co-own. A YOLO vision model trained on 34 building types reads a screenshot of your base, and one shared core powers every platform.',
     tags: ['react-native', 'yolo', 'revenuecat', 'stripe'],
