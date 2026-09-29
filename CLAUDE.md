@@ -29,47 +29,30 @@ npm lint
 
 ### Next.js App Router Structure
 
-- `app/layout.tsx` - Root layout component with metadata configuration (title, description)
-- `app/page.tsx` - Homepage component (default server component)
-- `app/globals.css` - Global styles
-- `app/page.module.css` - CSS modules for homepage
+- `app/layout.tsx` - Root layout: fonts (VT323 + IBM Plex Mono via `next/font/google`), metadata, the scanline overlay, and Vercel Analytics
+- `app/page.tsx` - Homepage; composes the section components in order
+- `app/globals.css` - Colour tokens, gutters, and base element styles
+- `app/components/` - One component per section (`Nav`, `Hero`, `Projects` + `ProjectCard`, `BlogList`, `OffHours`, `Footer`) plus small shared pieces (`Section`, `SectionHeader`, `Prompt`, `Cursor`, `Scanlines`), each with its own CSS module
+- `app/data/` - All editable content as typed arrays (`profile.ts`, `projects.ts`, `posts.ts`, `offHours.ts`)
 
 ### Key Patterns
 
-- **Server Components by default**: All components in the `app/` directory are React Server Components unless marked with 'use client'
-- **CSS Modules**: Component-scoped styles using `.module.css` files
+- **Server Components by default**: Nothing on the page needs client JavaScript; keep it that way unless a feature requires it
+- **CSS Modules**: Component-scoped styles using `.module.css` files; shared values are CSS custom properties in `globals.css`
 - **TypeScript paths**: `@/*` alias maps to project root (tsconfig.json:22)
 - **Strict mode enabled**: TypeScript strict mode and React strict mode are both on
 
-### Customization Notes
+### Design ("terminal")
 
-- Resume link in `app/page.tsx:10` expects `/resume.pdf` in the `public/` folder
-- Site metadata (title, description) is in `app/layout.tsx:4-7`
-- Personal name is hardcoded in `app/page.tsx:7` and `app/layout.tsx:5`
+- Black background, off-white text (`--fg: #f2f2f2`), grays `#d6d6d6` / `#bdbdbd` / `#9a9a9a` / `#808080`, borders `#2e2e2e` / `#3a3a3a`. Use the tokens in `globals.css`, not raw hex values.
+- VT323 (`--font-display`) is for the name and headings only; everything else is IBM Plex Mono (`--font-mono`). Both fall back to `ui-monospace, Menlo` rather than next/font's resized Arial, because Plex lacks glyphs like `→` and `↗`.
+- Content is capped at `--content-max` (1200px) and centred by `--gutter`; section borders run edge to edge. Breakpoints are 1100px, 900px (one-column projects) and 720px.
+- The blinking cursor (`Cursor`) uses a `steps(1)` animation and stays solid under `prefers-reduced-motion`.
 
-### Daylight cycle
+### Content
 
-The whole page is driven by one clock. `app/daylight.ts` turns a single `phase`
-(0 -> 1 over `CYCLE_SECONDS`) into every derived value; `app/DaylightProvider.tsx`
-runs that clock and publishes the results as CSS custom properties on `<html>`.
-Nothing else may keep its own time base.
-
-- `--dark-t` drives the page palette in `globals.css`. It is intentionally not
-  linear in time: ink and background cross in about a second so they never sit
-  at a mid-tone together, and `--ink-halo` carries legibility through the
-  crossing. Changing that curve means re-checking contrast.
-- `--lamp` lights the streetlamps (`app/Streetlamp.tsx`), which stand in each
-  section's gutter above 1080px and on the hero horizon.
-- `--image-filter` re-exposes photographs so they don't glare at night.
-- Append `?daylight=debug` for a scrubber to drag through the cycle.
-
-### Later
-
-- Replace the placeholder artwork with real art. Everything drawable lives in
-  `app/sky/` (`Sun`, `Moon`, `Cloud`, `Lamp`) and is positioned entirely by its
-  caller, so each file can be swapped without touching the motion or lighting.
-- The streetlamp lighting needs another pass. The cone is the only light source
-  now (a second rectangular glow was removed because its box edges showed), so
-  it is doing all the work alone: the falloff where it ends is still a little
-  readable as a shape, and the light does not yet wrap the text the way a real
-  lamp would. Worth revisiting once the lamp artwork is final.
+- Edit content in `app/data/`, not in the components.
+- A project shows its `media` image through `next/image` when `kind: 'image'`, otherwise the dashed placeholder box. To add a screenshot, put it in `public/`, import it in `projects.ts`, and switch that project's `media` to `kind: 'image'`.
+- The Blog and Outside of Work sections currently render a `ComingSoon` box. Their real markup is commented out in `BlogList.tsx` and `OffHours.tsx` (with the data untouched in `posts.ts` / `offHours.ts`); uncomment it to bring them back.
+- There is no blog backend yet: `posts.ts` holds placeholder rows, and `BlogList` sorts by `date`, newest first.
+- Bracketed text like `[POST TITLE]` or `[RESUME URL]` is an intentional placeholder; leave it until real content exists.

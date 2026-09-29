@@ -1,0 +1,48 @@
+.bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 24px;
+  padding: 22px var(--gutter);
+  border-bottom: 1px solid var(--border);
+  font-size: 15px;
+}
+
+.host {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: var(--gray-3);
+}
+
+.user {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.link {
+  padding: 10px 14px;
+  color: var(--gray-3);
+}
+
+@media (max-width: 720px) {
+  .bar {
+    padding-block: 16px;
+  }
+
+  .links {
+    gap: 0;
+    margin-inline: -10px;
+  }
+
+  .link {
+    padding: 8px 10px;
+  }
+}

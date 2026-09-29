@@ -1,0 +1,24 @@
+.cursor {
+  display: inline-block;
+  flex-shrink: 0;
+  background: var(--fg);
+  animation: blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    animation: none;
+  }
+}
