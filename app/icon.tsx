@@ -7,40 +7,27 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default async function Icon() {
-  const fontData = await fetch(
-    'https://cdn.jsdelivr.net/gh/google/fonts@main/ofl/tinos/Tinos-Regular.ttf',
-  ).then((res) => res.arrayBuffer())
-
+export default function Icon() {
   return new ImageResponse(
     (
       <div
         style={{
-          background: '#f3f1ec',
+          background: '#000000',
           width: '100%',
           height: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          color: '#294f63',
-          fontSize: 22,
-          fontFamily: 'Times New Roman',
-          fontWeight: 400,
+          gap: 2,
+          color: '#f2f2f2',
+          fontSize: 20,
+          fontWeight: 700,
         }}
       >
         H
+        <div style={{ width: 6, height: 16, background: '#f2f2f2' }} />
       </div>
     ),
-    {
-      ...size,
-      fonts: [
-        {
-          name: 'Times New Roman',
-          data: fontData,
-          weight: 400,
-          style: 'normal',
-        },
-      ],
-    },
+    size,
   )
 }

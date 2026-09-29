@@ -1,0 +1,6 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  padding: var(--section-pad-top) var(--gutter) var(--section-pad-bottom);
+  border-bottom: 1px solid var(--border);
+}

@@ -1,0 +1,79 @@
+.hero {
+  gap: 28px;
+  padding-bottom: calc(var(--section-pad-bottom) + 10px);
+}
+
+.session {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--gray-3);
+}
+
+.name {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  /* The cursor and gap are sized in em so they scale with the name. At the
+     desktop size (232px) that is a 96 x 176 block with a 20px gap. */
+  gap: 0.086em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(64px, 16vw, 232px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--fg);
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.28);
+}
+
+.cursor {
+  width: 0.414em;
+  height: 0.759em;
+  box-shadow: 0 0 22px rgba(255, 255, 255, 0.35);
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+  max-width: 920px;
+}
+
+.aboutText {
+  margin: 0;
+  font-size: 22px;
+  line-height: 1.6;
+  color: var(--gray-1);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 40px;
+  margin: 24px 0 0;
+  font-size: 15px;
+  color: var(--gray-3);
+}
+
+.fact {
+  display: flex;
+  gap: 0.6em;
+}
+
+.fact dd {
+  margin: 0;
+  color: var(--fg);
+}
+
+@media (max-width: 720px) {
+  .aboutText {
+    font-size: 18px;
+  }
+
+  .facts {
+    flex-direction: column;
+  }
+}

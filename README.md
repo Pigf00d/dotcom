@@ -20,10 +20,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Customization
 
-- Edit `app/page.tsx` to modify the page content
-- Edit `app/page.module.css` to customize the styling
-- Add your resume PDF to the `public` folder and update the link in `app/page.tsx` if needed
-- Edit `app/layout.tsx` to change the page metadata
+- Edit the typed content files in `app/data/` (profile, projects, blog posts, off-hours) to change what the page says
+- Section markup and styles live in `app/components/`
+- Colours, gutters, and fonts are defined in `app/globals.css` and `app/layout.tsx`
 
 ## Build for Production
 

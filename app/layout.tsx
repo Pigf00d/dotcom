@@ -1,21 +1,27 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
-import { Cormorant_Garamond, Outfit } from 'next/font/google'
+import { IBM_Plex_Mono, VT323 } from 'next/font/google'
 import './globals.css'
-import DaylightProvider from './DaylightProvider'
+import Scanlines from './components/Scanlines'
 
-const cormorant = Cormorant_Garamond({
+const vt323 = VT323({
   subsets: ['latin'],
-  weight: ['300', '400'],
-  variable: '--font-display',
+  weight: '400',
+  variable: '--font-vt323',
   display: 'swap',
+  // Fall back to a real monospace, not next/font's resized Arial: glyphs the
+  // web fonts lack (→, ↗) and the pre-swap paint should stay terminal-like.
+  adjustFontFallback: false,
+  fallback: ['ui-monospace', 'Menlo', 'monospace'],
 })
 
-const outfit = Outfit({
+const plexMono = IBM_Plex_Mono({
   subsets: ['latin'],
-  weight: ['300', '400'],
-  variable: '--font-body',
+  weight: ['400', '500', '600'],
+  variable: '--font-plex-mono',
   display: 'swap',
+  adjustFontFallback: false,
+  fallback: ['ui-monospace', 'Menlo', 'monospace'],
 })
 
 export const metadata: Metadata = {
@@ -29,12 +35,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className={`${cormorant.variable} ${outfit.variable}`}
-    >
+    <html lang="en" className={`${vt323.variable} ${plexMono.variable}`}>
       <body>
-        <DaylightProvider>{children}</DaylightProvider>
+        {children}
+        <Scanlines />
         <Analytics />
       </body>
     </html>

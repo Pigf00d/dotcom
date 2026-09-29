@@ -1,0 +1,106 @@
+.offHours {
+  gap: 56px;
+}
+
+.fetch {
+  display: flex;
+  gap: 96px;
+  align-items: flex-start;
+}
+
+.art {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 20px;
+  line-height: 1.25;
+  color: var(--fg);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 14px;
+  font-size: 18px;
+}
+
+.host {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.rule {
+  color: var(--gray-4);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 14px 24px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Each label/value pair is wrapped for valid <dl> markup but lays out as
+   two cells of the parent grid. */
+.item {
+  display: contents;
+}
+
+.item dt {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.item dd {
+  margin: 0;
+  color: var(--gray-1);
+}
+
+.swatches {
+  display: flex;
+  margin-top: 18px;
+}
+
+.swatch {
+  width: 44px;
+  height: 24px;
+}
+
+.swatch:first-child {
+  border: 1px solid var(--border-strong);
+}
+
+@media (max-width: 1100px) {
+  .fetch {
+    gap: 56px;
+  }
+
+  .art {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 900px) {
+  .fetch {
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 720px) {
+  .info {
+    font-size: 16px;
+  }
+
+  .list {
+    grid-template-columns: 110px minmax(0, 1fr);
+    gap: 12px 16px;
+  }
+
+  .swatch {
+    width: calc(100% / 8);
+    max-width: 44px;
+  }
+}
