@@ -14,7 +14,7 @@ export const profile = {
   host: 'henry@bentonville',
   lastLogin: 'Last login: Tue Sep 29 09:41:12 on ttys001',
   about:
-    'Software engineer at Walmart Global Tech, building tools for pharmacy teams across 4,500+ stores. On the side I co-own BurntBase, a computer vision app with 86,000+ users.',
+    'Software engineer at Walmart Global Tech, building tools for pharmacy teams across 4,500+ stores.',
 }
 
 export const facts: Fact[] = [
