@@ -1,5 +1,8 @@
-import { offHours } from '../data/offHours'
-import { profile } from '../data/profile'
+// The neofetch block is parked until the section is ready; uncomment these
+// imports and the JSX below to bring it back.
+// import { offHours } from '../data/offHours'
+// import { profile } from '../data/profile'
+import ComingSoon from './ComingSoon'
 import Section from './Section'
 import SectionHeader from './SectionHeader'
 import styles from './OffHours.module.css'
@@ -38,6 +41,8 @@ export default function OffHours() {
         command="neofetch --off-hours"
         title="Outside of Work"
       />
+      <ComingSoon label="TBD" />
+      {/*
       <div className={styles.fetch}>
         <pre className={styles.art} aria-hidden="true">
           {art}
@@ -66,6 +71,7 @@ export default function OffHours() {
           </div>
         </div>
       </div>
+      */}
     </Section>
   )
 }

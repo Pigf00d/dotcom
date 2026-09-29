@@ -53,5 +53,6 @@ npm lint
 
 - Edit content in `app/data/`, not in the components.
 - A project shows its `media` image through `next/image` when `kind: 'image'`, otherwise the dashed placeholder box. To add a screenshot, put it in `public/`, import it in `projects.ts`, and switch that project's `media` to `kind: 'image'`.
+- The Blog and Outside of Work sections currently render a `ComingSoon` box. Their real markup is commented out in `BlogList.tsx` and `OffHours.tsx` (with the data untouched in `posts.ts` / `offHours.ts`); uncomment it to bring them back.
 - There is no blog backend yet: `posts.ts` holds placeholder rows, and `BlogList` sorts by `date`, newest first.
 - Bracketed text like `[POST TITLE]` or `[RESUME URL]` is an intentional placeholder; leave it until real content exists.

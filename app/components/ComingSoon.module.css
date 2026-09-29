@@ -1,0 +1,26 @@
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  padding: 24px;
+  border: 1px dashed var(--placeholder-border);
+  background: var(--placeholder-bg);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--gray-3);
+}
+
+@media (max-width: 720px) {
+  .box {
+    min-height: 160px;
+  }
+
+  .label {
+    font-size: 32px;
+  }
+}
